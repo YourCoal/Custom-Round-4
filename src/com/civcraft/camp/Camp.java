@@ -17,7 +17,6 @@ import java.util.TimeZone;
 import java.util.UUID;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Effect;
 import org.bukkit.FireworkEffect;
@@ -45,10 +44,10 @@ import com.civcraft.exception.InvalidConfiguration;
 import com.civcraft.exception.InvalidNameException;
 import com.civcraft.exception.InvalidObjectException;
 import com.civcraft.lorestorage.LoreCraftableMaterial;
+import com.civcraft.main.BasicMessages;
 import com.civcraft.main.CivData;
 import com.civcraft.main.CivGlobal;
 import com.civcraft.main.CivLog;
-import com.civcraft.main.CivMessage;
 import com.civcraft.object.BuildableDamageBlock;
 import com.civcraft.object.ControlPoint;
 import com.civcraft.object.CultureChunk;
@@ -73,11 +72,7 @@ import com.civcraft.util.SimpleBlock.Type;
 public class Camp extends Buildable {
 	
 	private String ownerName;
-	private int hitpoints;
-	private int firepoints;
 	private BlockCoord corner;
-	private Date nextRaidDate;
-	private int raidLength;
 	public HashSet<BlockCoord> doors = new HashSet<BlockCoord>();
 	public HashMap<BlockCoord, CampBlock> campBlocks = new HashMap<BlockCoord, CampBlock>();
 	public HashMap<BlockCoord, ControlPoint> controlBlocks = new HashMap<BlockCoord, ControlPoint>();
@@ -87,22 +82,26 @@ public class Camp extends Buildable {
 	public static final String SUBDIR = "camp";
 	private boolean undoable = false;
 	
-	public HashSet<BlockCoord> growthLocations = new HashSet<BlockCoord>();
+	private int raidLength;
+	private Date nextRaidDate;
+	
 	private boolean gardenEnabled = false;
+	public HashSet<BlockCoord> growthLocations = new HashSet<BlockCoord>();
 	
-	public HashMap<Integer, BlockCoord> firepitBlocks = new HashMap<Integer, BlockCoord>();
-	public HashSet<BlockCoord> fireFurnaceBlocks = new HashSet<BlockCoord>();
-	private Integer coal_per_firepoint;
+	private int hitpoints;
+	private int firepoints;
 	private Integer maxFirePoints;
+	private Integer coal_per_firepoint;
+	public HashSet<BlockCoord> fireFurnaceBlocks = new HashSet<BlockCoord>();
+	public HashMap<Integer, BlockCoord> firepitBlocks = new HashMap<Integer, BlockCoord>();
 	
+	private boolean sifterEnabled = false;
 	public SifterComponent sifter = new SifterComponent();
 	public ReentrantLock sifterLock = new ReentrantLock(); 
-	private boolean sifterEnabled = false;
 	
-	public HashSet<BlockCoord> foodDepositPoints = new HashSet<BlockCoord>();
-	public ConsumeLevelComponent consumeComponent;
 	private boolean longhouseEnabled = false;
-	
+	public ConsumeLevelComponent consumeComponent;
+	public HashSet<BlockCoord> foodDepositPoints = new HashSet<BlockCoord>();
 	
 	private HashMap<String, ConfigCampUpgrade> upgrades = new HashMap<String, ConfigCampUpgrade>();
 	
@@ -124,48 +123,40 @@ public class Camp extends Buildable {
 					Camp existCamp = CivGlobal.getCamp(name);
 					if (existCamp != null) {
 						throw new CivException("A camp named "+name+" already exists!");
-					}
-					
-					ItemStack stack = player.getItemInHand();
+					} ItemStack stack = player.getItemInHand();
 					LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterial(stack);
 					if (craftMat == null || !craftMat.hasComponent("FoundCamp")) {
 						throw new CivException("You must be holding an item that can found a camp.");
-					}
-					
-					Camp camp = new Camp(resident, name, player.getLocation());
+					} Camp camp = new Camp(resident, name, player.getLocation());
 					camp.buildCamp(player, player.getLocation());
 					camp.setUndoable(true);
 					CivGlobal.addCamp(camp);
 					camp.save();
-					CivMessage.sendSuccess(player, "You have set up camp!");
+					BasicMessages.sendSuccess(player, "You have set up camp!");
+					BasicMessages.globalCamp(resident+" has set up camp "+name+"!");
 					ItemStack newStack = new ItemStack(Material.AIR);
 					player.setItemInHand(newStack);
 					resident.clearInteractiveMode();
 				} catch (CivException e) {
-					CivMessage.sendError(player, e.getMessage());
+					BasicMessages.sendAError(player, "camp.Camp-141: "+e.getMessage());
 				}
 			}
-		}
-		TaskMaster.syncTask(new SyncTask(resident, name, player));
+		} TaskMaster.syncTask(new SyncTask(resident, name, player));
 	}
 	
 	public Camp(Resident owner, String name, Location corner) throws CivException {
 		this.ownerName = owner.getUUID().toString();
 		this.corner = new BlockCoord(corner);
-		try {
-			this.setName(name);
+		try { this.setName(name);
 		} catch (InvalidNameException e1) {
 			throw new CivException("Invalid name, please choose another.");
-		}
-		nextRaidDate = new Date();
+		} nextRaidDate = new Date();
 		nextRaidDate.setTime(nextRaidDate.getTime() + 24*60*60*1000);
-		try {
-			this.firepoints = CivSettings.getInteger(CivSettings.campConfig, "camp.firepoints");
+		try { this.firepoints = CivSettings.getInteger(CivSettings.campConfig, "camp.firepoints");
 			this.hitpoints = CivSettings.getInteger(CivSettings.campConfig, "camp.hitpoints");
 		} catch (InvalidConfiguration e) {
 			e.printStackTrace();
-		}
-		loadSettings();
+		} loadSettings();
 	}
 	
 	public Camp(ResultSet rs) throws SQLException, InvalidNameException, InvalidObjectException, CivException {
@@ -191,8 +182,7 @@ public class Camp extends Buildable {
 			for (ConfigCampLonghouseLevel lvl : CivSettings.longhouseLevels.values()) {
 				consumeComponent.addLevel(lvl.level, lvl.count);
 				consumeComponent.setConsumes(lvl.level, lvl.consumes);
-			}
-			this.consumeComponent.onLoad();
+			} this.consumeComponent.onLoad();
 		} catch (InvalidConfiguration e) {
 			e.printStackTrace();
 		}
@@ -234,14 +224,11 @@ public class Camp extends Buildable {
 			this.hitpoints = CivSettings.getInteger(CivSettings.campConfig, "camp.hitpoints");
 		} catch (InvalidConfiguration e) {
 			e.printStackTrace();
-		}
-		
-		this.firepoints = rs.getInt("firepoints");
+		} this.firepoints = rs.getInt("firepoints");
 		if (this.ownerName == null) {
 			CivLog.error("COULD NOT FIND OWNER FOR CAMP ID:"+this.getId());
 			return;
-		}
-		this.loadUpgradeString(rs.getString("upgrades"));
+		} this.loadUpgradeString(rs.getString("upgrades"));
 		this.bindCampBlocks();
 	}
 	
@@ -268,8 +255,7 @@ public class Camp extends Buildable {
 		for (Resident resident : this.members.values()) {
 			resident.setCamp(null);
 			resident.save();
-		}
-		this.unbindCampBlocks();
+		} this.unbindCampBlocks();
 		SQL.deleteNamedObject(this, TABLE_NAME);
 		CivGlobal.removeCamp(this.getName());
 	}
@@ -279,16 +265,12 @@ public class Camp extends Buildable {
 		for (String id : split) {
 			if (id == null || id.equalsIgnoreCase("")) {
 				continue;
-			}
-			
-			id = id.trim();
+			} id = id.trim();
 			ConfigCampUpgrade upgrade = CivSettings.campUpgrades.get(id);
 			if (upgrade == null) {
 				CivLog.warning("Unknown upgrade id "+id+" during load.");
 				continue;
-			}
-			
-			this.upgrades.put(id, upgrade);
+			} this.upgrades.put(id, upgrade);
 			upgrade.processAction(this);
 		}
 	}
@@ -297,14 +279,12 @@ public class Camp extends Buildable {
 		String out = "";
 		for (ConfigCampUpgrade upgrade : this.upgrades.values()) {
 			out += upgrade.id+",";
-		}
-		return out;
+		} return out;
 	}
 	
 	public void destroy() {
 		this.fancyCampBlockDestory();
-		try {
-			this.delete();
+		try { this.delete();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -312,8 +292,7 @@ public class Camp extends Buildable {
 	
 	public void disband() {
 		this.undoFromTemplate();
-		try {
-			this.delete();
+		try { this.delete();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -321,8 +300,7 @@ public class Camp extends Buildable {
 	
 	public void undo() {
 		this.undoFromTemplate();
-		try {
-			this.delete();
+		try { this.delete();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -331,8 +309,7 @@ public class Camp extends Buildable {
 	@Override
 	public void undoFromTemplate() {
 		Template undo_tpl = new Template();
-		try {
-			undo_tpl.initUndoTemplate(this.getCorner().toString(), SUBDIR);
+		try { undo_tpl.initUndoTemplate(this.getCorner().toString(), SUBDIR);
 			undo_tpl.buildUndoTemplate(undo_tpl, this.getCorner().getBlock());
 			undo_tpl.deleteUndoTemplate(this.getCorner().toString(), SUBDIR);
 		} catch (IOException | CivException e1) {
@@ -342,18 +319,15 @@ public class Camp extends Buildable {
 	
 	public void buildCamp(Player player, Location center) throws CivException {
 		String templateFile;
-		try {
-			templateFile = CivSettings.getString(CivSettings.campConfig, "camp.template");
+		try { templateFile = CivSettings.getString(CivSettings.campConfig, "camp.template");
 		} catch (InvalidConfiguration e) {
 			e.printStackTrace();
 			return;
-		}
-		
-		Template tpl;
+		} Template tpl;
 		Resident resident = CivGlobal.getResident(player);
 		if (resident.desiredTemplate == null) {
-			try {
-				String templatePath = Template.getTemplateFilePath(templateFile, Template.getDirection(center), TemplateType.STRUCTURE, "default");
+			try { String templatePath = Template.getTemplateFilePath(templateFile, Template.getDirection(center),
+						TemplateType.STRUCTURE, "default");
 				this.setTemplateName(templatePath);
 				tpl = Template.getTemplate(templatePath, center);
 			} catch (IOException e) {
@@ -363,42 +337,32 @@ public class Camp extends Buildable {
 				e.printStackTrace();
 				return;
 			}
-		} else {
-			tpl = resident.desiredTemplate;
+		} else { tpl = resident.desiredTemplate;
 			resident.desiredTemplate = null;
 			this.setTemplateName(tpl.getFilepath());
-		}
-		
-		corner.setFromLocation(this.repositionCenter(center, tpl.dir(), tpl.size_x, tpl.size_z));
+		} corner.setFromLocation(this.repositionCenter(center, tpl.dir(), tpl.size_x, tpl.size_z));
 		checkBlockPermissionsAndRestrictions(player, corner.getBlock(), tpl.size_x, tpl.size_y, tpl.size_z);
 		try {
 			tpl.saveUndoTemplate(this.getCorner().toString(), SUBDIR, getCorner().getLocation());
 		} catch (IOException e1) {
 			e1.printStackTrace();
-		}
-		buildCampFromTemplate(tpl, corner);
+		} buildCampFromTemplate(tpl, corner);
 		processCommandSigns(tpl, corner);
-		try {
-			this.saveNow();
+		try { this.saveNow();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new CivException("Internal SQL Error.");
-		}
-		
-		this.addMember(resident);
+		} this.addMember(resident);
 		resident.save();
 	}
 	
 	public void reprocessCommandSigns() {		
 		Template tpl;
-		try {
-			tpl = Template.getTemplate(this.getSavedTemplatePath(), null);
+		try { tpl = Template.getTemplate(this.getSavedTemplatePath(), null);
 		} catch (IOException | CivException e) {
 			e.printStackTrace();
 			return;
-		}
-		
-		processCommandSigns(tpl, corner);
+		} processCommandSigns(tpl, corner);
 	}
 	
 	private void processCommandSigns(Template tpl, BlockCoord corner) {
@@ -418,8 +382,7 @@ public class Camp extends Buildable {
 					sign.setLine(3, "command");
 					sign.update();
 					this.addCampBlock(absCoord);
-				} else {
-					ItemManager.setTypeId(absCoord.getBlock(), ItemManager.getId(Material.AIR));
+				} else { ItemManager.setTypeId(absCoord.getBlock(), ItemManager.getId(Material.AIR));
 					this.removeCampBlock(absCoord);
 				}
 				break;
@@ -430,11 +393,9 @@ public class Camp extends Buildable {
 					Block b = absCoord.getBlock();
 					if (ItemManager.getId(b) != CivData.FARMLAND) {
 						ItemManager.setTypeId(b, CivData.FARMLAND);
-					}
-					this.addCampBlock(absCoord, true);
+					} this.addCampBlock(absCoord, true);
 					this.addCampBlock(new BlockCoord(absCoord.getBlock().getRelative(0, 1, 0)), true);
-				} else {
-					this.addCampBlock(absCoord);
+				} else { this.addCampBlock(absCoord);
 					this.addCampBlock(new BlockCoord(absCoord.getBlock().getRelative(0, 1, 0)));
 				}
 				break;
@@ -464,13 +425,11 @@ public class Camp extends Buildable {
 				default:
 					CivLog.warning("Unknown ID for sifter in camp:"+id);
 					break;
-				}
-				if (this.sifterEnabled) {
+				} if (this.sifterEnabled) {
 					ItemManager.setTypeId(absCoord.getBlock(), ItemManager.getId(Material.CHEST));
 					byte data2 = CivData.convertSignDataToChestData((byte)sb.getData());
 					ItemManager.setData(absCoord.getBlock(), data2);
-				} else {
-					try {
+				} else { try {
 					ItemManager.setTypeId(absCoord.getBlock(), ItemManager.getId(Material.SIGN_POST));
 					ItemManager.setData(absCoord.getBlock(), sb.getData());
 					Sign sign = (Sign)absCoord.getBlock().getState();
@@ -482,8 +441,7 @@ public class Camp extends Buildable {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				}
-				this.addCampBlock(absCoord);
+				} this.addCampBlock(absCoord);
 				break;
 			case "/foodinput":
 				if (this.longhouseEnabled) {
@@ -500,8 +458,7 @@ public class Camp extends Buildable {
 					sign.setLine(2, "Upgrade using");
 					sign.setLine(3, "/camp upgrade");
 					sign.update();
-				}
-				this.addCampBlock(absCoord);
+				} this.addCampBlock(absCoord);
 				break;
 			case "/door":
 				this.doors.add(absCoord);
@@ -530,8 +487,7 @@ public class Camp extends Buildable {
 				sign.update();
 				break;
 			}
-		}
-		updateFirepit();
+		} updateFirepit();
 	}
 	
 	private void removeCampBlock(BlockCoord absCoord) {
@@ -540,8 +496,7 @@ public class Camp extends Buildable {
 	}
 	
 	private void updateFirepit() {
-		try {
-			int maxFirePoints = CivSettings.getInteger(CivSettings.campConfig, "camp.firepoints");
+		try { int maxFirePoints = CivSettings.getInteger(CivSettings.campConfig, "camp.firepoints");
 			int totalFireBlocks = this.firepitBlocks.size();
 			double percentLeft = (double)this.firepoints / (double) maxFirePoints;
 			int litFires = (int)(percentLeft*totalFireBlocks);
@@ -550,9 +505,7 @@ public class Camp extends Buildable {
 				if (next == null) {
 					CivLog.warning("Couldn't find firepit id:"+i);
 					continue;
-				}
-				
-				if (i < litFires) {
+				} if (i < litFires) {
 					ItemManager.setTypeId(next.getBlock(), CivData.FIRE);
 				} else {
 					ItemManager.setTypeId(next.getBlock(), CivData.AIR);
@@ -568,35 +521,28 @@ public class Camp extends Buildable {
 		for (BlockCoord bcoord : this.fireFurnaceBlocks) {
 			Furnace furnace = (Furnace)bcoord.getBlock().getState();
 			mInv.addInventory(furnace.getInventory());
-		}
-		
-		if (mInv.contains(null, CivData.COAL, (short)0, coal_per_firepoint)) {
+		} if (mInv.contains(null, CivData.COAL, (short)0, coal_per_firepoint)) {
 			try {
 				mInv.removeItem(CivData.COAL, coal_per_firepoint);
 			} catch (CivException e) {
 				e.printStackTrace();
-			}
-			
-			this.firepoints++;
+			} this.firepoints++;
 			if (firepoints > maxFirePoints) {
 				firepoints = maxFirePoints;
 			}
-		} else {
-			this.firepoints--;
-			CivMessage.sendCamp(this, CivColor.Yellow+"Our campfire doesn't have enough coal to keep burning, its starting"
-					+ "to go out! "+this.firepoints+" hours left.");
+		} else { this.firepoints--;
+			BasicMessages.sendCamp(this, CivColor.Yellow+"The Camp's fire is running out of coal, and is going to go out!"
+					+ "to go out! If it is not restocked, the camp will be destoryed in "+this.firepoints+" hours!");
 			
-			double percentLeft = (double)this.firepoints / (double)this.maxFirePoints;
-			if (percentLeft < 0.3) {
-				CivMessage.sendCamp(this, CivColor.Yellow+ChatColor.BOLD+"Warning! Our campfire is less than 30% out! We"
-						+ "need to stock it with more coal or our camp will be destroyed!");
-			}
-			
+//			double percentLeft = (double)this.firepoints / (double)this.maxFirePoints;
+//			if (percentLeft < 0.3) {
+//				BasicMessages.sendCamp(this, CivColor.Yellow+ChatColor.BOLD+"Warning! Our campfire is less than 30% out! We"
+//						+ "need to stock it with more coal or our camp will be destroyed!");
+//			}
 			if (this.firepoints < 0) {
 					this.destroy();
 			}
-		}
-		this.save();
+		} this.save();
 		this.updateFirepit();
 	}
 	
@@ -605,49 +551,42 @@ public class Camp extends Buildable {
 		for (BlockCoord bcoord : this.foodDepositPoints) {
 			Block b = bcoord.getBlock();
 			if (b.getState() instanceof Chest) {
-				try {
-				mInv.addInventory(((Chest)b.getState()).getInventory());
+				try { mInv.addInventory(((Chest)b.getState()).getInventory());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-		}
-		
-		if (mInv.getInventoryCount() == 0) {
-			CivMessage.sendCamp(this, CivColor.Rose+"Your camp's longhouse could not find an input chest for food! Nothing happens.");
+		} if (mInv.getInventoryCount() == 0) {
+			BasicMessages.sendAError(this, "camp.Camp-618: Your camp's longhouse could not find an input chest for food! Nothing happens.");
 			return;
-		}
-		this.consumeComponent.setSource(mInv);
+		} this.consumeComponent.setSource(mInv);
 		Result result = this.consumeComponent.processConsumption();
 		this.consumeComponent.onSave();
 		switch (result) {
 		case STARVE:
-			CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+CivColor.Rose+"starved"
+			BasicMessages.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+CivColor.Rose+"starved"
 					+consumeComponent.getCountString()+CivColor.LightGreen+" and generated no coins.");
 			return;
 		case LEVELDOWN:
-			CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+CivColor.Rose+"starved and leveled-down"
+			BasicMessages.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+CivColor.Rose+"starved and leveled-down"
 					+CivColor.LightGreen+" and generated no coins.");
 			return;
 		case STAGNATE:
-			CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+CivColor.Yellow+"stagnated"
+			BasicMessages.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+CivColor.Yellow+"stagnated"
 					+CivColor.LightGreen+" and generated no coins.");
 			return;
 		case UNKNOWN:
-			CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse has done "+CivColor.Purple
+			BasicMessages.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse has done "+CivColor.Purple
 					+"something unknown"+CivColor.LightGreen+" and generated no coins.");
 			return;
 		default:
 			break;
-		}
-		ConfigCampLonghouseLevel lvl = null;
+		} ConfigCampLonghouseLevel lvl = null;
 		if (result == Result.LEVELUP) {
 			lvl = CivSettings.longhouseLevels.get(consumeComponent.getLevel()-1);
 		} else {
 			lvl = CivSettings.longhouseLevels.get(consumeComponent.getLevel());
-		}
-		
-		double total_coins = lvl.coins;
+		} double total_coins = lvl.coins;
 		this.getOwner().getTreasury().deposit(total_coins);
 		LoreCraftableMaterial craftMat =  LoreCraftableMaterial.getCraftMaterialFromId("civ:camp_faith");
 		if (craftMat != null) {
@@ -659,9 +598,7 @@ public class Camp extends Buildable {
 			attrs.addLore(CivColor.LightGray+res.getName());
 			token = attrs.getStack();
 			mInv.addItem(token);
-		}
-		
-		String stateMessage = "";
+		} String stateMessage = "";
 		switch (result) {
 		case GROW:
 			stateMessage = CivColor.Green+"grew"+consumeComponent.getCountString()+CivColor.LightGreen;
@@ -674,8 +611,7 @@ public class Camp extends Buildable {
 			break;
 		default:
 			break;
-		}
-		CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+stateMessage+" and generated "+total_coins
+		} BasicMessages.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+stateMessage+" and generated "+total_coins
 				+" coins. Coins were given to the camp's owner.");
 	}
 	
@@ -687,20 +623,15 @@ public class Camp extends Buildable {
 					Block nextBlock = cornerBlock.getRelative(x, y, z);
 					if (tpl.blocks[x][y][z].specialType == Type.COMMAND) {
 						continue;
-					}
-					
-					if (tpl.blocks[x][y][z].specialType == Type.LITERAL) {
+					} if (tpl.blocks[x][y][z].specialType == Type.LITERAL) {
 						tpl.blocks[x][y][z].command = "/literal";
 						tpl.commandBlockRelativeLocations.add(new BlockCoord(cornerBlock.getWorld().getName(), x, y,z));
 						continue;
-					}
-					try {
+					} try {
 						if (ItemManager.getId(nextBlock) != tpl.blocks[x][y][z].getType()) {
 							ItemManager.setTypeId(nextBlock, tpl.blocks[x][y][z].getType());
 							ItemManager.setData(nextBlock, tpl.blocks[x][y][z].getData());
-						}
-						
-						if (ItemManager.getId(nextBlock) != CivData.AIR) {
+						} if (ItemManager.getId(nextBlock) != CivData.AIR) {
 							this.addCampBlock(new BlockCoord(nextBlock.getLocation()));
 						}
 					} catch (Exception e) {
@@ -713,17 +644,14 @@ public class Camp extends Buildable {
 	
 	private void bindCampBlocks() {
 		Template tpl;
-		try {
-			tpl = Template.getTemplate(this.getSavedTemplatePath(), null);
+		try { tpl = Template.getTemplate(this.getSavedTemplatePath(), null);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;
 		} catch (CivException e) {
 			e.printStackTrace();
 			return;
-		}
-		
-		for (int y = 0; y < tpl.size_y; y++) {
+		} for (int y = 0; y < tpl.size_y; y++) {
 			for (int z = 0; z < tpl.size_z; z++) {
 				for (int x = 0; x < tpl.size_x; x++) {
 					int relx = getCorner().getX() + x;
@@ -732,16 +660,12 @@ public class Camp extends Buildable {
 					BlockCoord coord = new BlockCoord(this.getCorner().getWorldname(), (relx), (rely), (relz));
 					if (tpl.blocks[x][y][z].getType() == CivData.AIR) {
 						continue;
-					}
-					
-					if (tpl.blocks[x][y][z].specialType == SimpleBlock.Type.COMMAND) {
+					} if (tpl.blocks[x][y][z].specialType == SimpleBlock.Type.COMMAND) {
 						continue;
-					}
-					this.addCampBlock(coord);
+					} this.addCampBlock(coord);
 				}
 			}
-		}
-		this.processCommandSigns(tpl, corner);
+		} this.processCommandSigns(tpl, corner);
 	}
 	
 	protected Location repositionCenter(Location center, String dir, double x_size, double z_size) throws CivException {
@@ -750,23 +674,16 @@ public class Camp extends Buildable {
 		if (dir.equalsIgnoreCase("east")) {
 			loc.setZ(loc.getZ() - (z_size / 2));
 			loc.setX(loc.getX() + SHIFT_OUT);
-		}
-		
-		else if (dir.equalsIgnoreCase("west")) {
+		} else if (dir.equalsIgnoreCase("west")) {
 			loc.setZ(loc.getZ() - (z_size / 2));
 			loc.setX(loc.getX() - (SHIFT_OUT+x_size));
-		}
-		
-		else if (dir.equalsIgnoreCase("north")) {
+		} else if (dir.equalsIgnoreCase("north")) {
 			loc.setX(loc.getX() - (x_size / 2));
 			loc.setZ(loc.getZ() - (SHIFT_OUT+z_size));
-		}
-		
-		else if (dir.equalsIgnoreCase("south")) {
+		} else if (dir.equalsIgnoreCase("south")) {
 			loc.setX(loc.getX() - (x_size / 2));
 			loc.setZ(loc.getZ() + SHIFT_OUT);
-		}
-		return loc;
+		} return loc;
 	}
 	
 	protected void checkBlockPermissionsAndRestrictions(Player player, Block centerBlock, int regionX, int regionY,
@@ -775,20 +692,13 @@ public class Camp extends Buildable {
 		CultureChunk cc = CivGlobal.getCultureChunk(ccoord);
 		if (cc != null) {
 			throw new CivException("You cannot build a camp inside a civilization's culture.");
-		}
-		
-		if (player.getLocation().getY() >= 200) {
+		} if (player.getLocation().getY() >= 200) {
 			throw new CivException("You're too high to build camps.");
-		}
-		
-		if ((regionY + centerBlock.getLocation().getBlockY()) >= 255) {
+		} if ((regionY + centerBlock.getLocation().getBlockY()) >= 255) {
 			throw new CivException("Cannot build camp here, would go over the minecraft height limit.");
-		}
-		
-		if (!player.isOp()) {
+		} if (!player.isOp()) {
 			Buildable.validateDistanceFromSpawn(centerBlock.getLocation());
-		}
-		int yTotal = 0;
+		} int yTotal = 0;
 		int yCount = 0;
 		RoadBlock rb;
 		LinkedList<RoadBlock> deletedRoadBlocks = new LinkedList<RoadBlock>();
@@ -798,34 +708,23 @@ public class Camp extends Buildable {
 					Block b = centerBlock.getRelative(x, y, z);
 					if (ItemManager.getId(b) == CivData.CHEST) {
 						throw new CivException("Cannot build here, would destroy chest.");
-					}
-					BlockCoord coord = new BlockCoord(b);
+					} BlockCoord coord = new BlockCoord(b);
 					ChunkCoord chunkCoord = new ChunkCoord(coord.getLocation());
 					TownChunk tc = CivGlobal.getTownChunk(chunkCoord);
 					if (tc != null && !tc.perms.hasPermission(PlotPermissions.Type.DESTROY, CivGlobal.getResident(player))) {
-						throw new CivException("Cannot build here, you need DESTROY permissions to the block at "+b.getX()+","+b.getY()+","+b.getZ());
-					}
-					
-					if (CivGlobal.getProtectedBlock(coord) != null) {
+						throw new CivException("Cannot build here, you need DESTROY permissions to the block at "+
+					b.getX()+","+b.getY()+","+b.getZ());
+					} if (CivGlobal.getProtectedBlock(coord) != null) {
 						throw new CivException("Cannot build here, protected blocks in the way.");
-					}
-					
-					if (CivGlobal.getStructureBlock(coord) != null) {
+					} if (CivGlobal.getStructureBlock(coord) != null) {
 						throw new CivException("Cannot build here, structure blocks in the way.");
-					}
-					
-					if (CivGlobal.getFarmChunk(chunkCoord) != null) {
+					} if (CivGlobal.getFarmChunk(chunkCoord) != null) {
 						throw new CivException("Cannot build here, in the same chunk as a farm improvement.");
-					}
-					
-					if (CivGlobal.getWallChunk(chunkCoord) != null) {
+					} if (CivGlobal.getWallChunk(chunkCoord) != null) {
 						throw new CivException("Cannot build here, in the same chunk as a wall improvement.");
-					}
-					
-					if (CivGlobal.getCampBlock(coord) != null) {
+					} if (CivGlobal.getCampBlock(coord) != null) {
 						throw new CivException("Cannot build here, a camp is in the way.");
-					}
-					yTotal += b.getWorld().getHighestBlockYAt(centerBlock.getX()+x, centerBlock.getZ()+z);
+					} yTotal += b.getWorld().getHighestBlockYAt(centerBlock.getX()+x, centerBlock.getZ()+z);
 					yCount++;
 					rb = CivGlobal.getRoadBlock(coord);
 					if (CivGlobal.getRoadBlock(coord) != null) {
@@ -833,12 +732,9 @@ public class Camp extends Buildable {
 					}
 				}
 			}
-		}
-		
-		for (RoadBlock roadBlock : deletedRoadBlocks) {
+		} for (RoadBlock roadBlock : deletedRoadBlocks) {
 			roadBlock.getRoad().deleteRoadBlock(roadBlock);
-		}
-		double highestAverageBlock = (double)yTotal / (double)yCount;
+		} double highestAverageBlock = (double)yTotal / (double)yCount;
 		if (((centerBlock.getY() > (highestAverageBlock+10)) || 
 				(centerBlock.getY() < (highestAverageBlock-10)))) {
 			throw new CivException("Cannot build here, you must be closer to the surface.");
@@ -919,44 +815,29 @@ public class Camp extends Buildable {
 		for (BlockCoord coord : this.campBlocks.keySet()) {
 			if (CivGlobal.getStructureChest(coord) != null) {
 				continue;
-			}
-			
-			if (CivGlobal.getStructureSign(coord) != null) {
+			} if (CivGlobal.getStructureSign(coord) != null) {
 				continue;
-			}
-			
-			if (ItemManager.getId(coord.getBlock()) == CivData.CHEST) {
+			} if (ItemManager.getId(coord.getBlock()) == CivData.CHEST) {
 				continue;
-			}
-			
-			if (ItemManager.getId(coord.getBlock()) == CivData.SIGN) {
+			} if (ItemManager.getId(coord.getBlock()) == CivData.SIGN) {
 				continue;
-			}
-			
-			if (ItemManager.getId(coord.getBlock()) == CivData.WALL_SIGN) {
+			} if (ItemManager.getId(coord.getBlock()) == CivData.WALL_SIGN) {
 				continue;
-			}
-			
-			if (CivSettings.alwaysCrumble.contains(ItemManager.getId(coord.getBlock()))) {
+			} if (CivSettings.alwaysCrumble.contains(ItemManager.getId(coord.getBlock()))) {
 				ItemManager.setTypeId(coord.getBlock(), CivData.GRAVEL);
 				continue;
-			}
-			
-			Random rand = new Random();
+			} Random rand = new Random();
 			if (rand.nextInt(100) <= 10) {
 				ItemManager.setTypeId(coord.getBlock(), CivData.GRAVEL);
 				continue;
-			}
-			if (rand.nextInt(100) <= 50) {
+			} if (rand.nextInt(100) <= 50) {
 				ItemManager.setTypeId(coord.getBlock(), CivData.FIRE);
 				continue;
-			}
-			if (rand.nextInt(100) <= 1) {
+			} if (rand.nextInt(100) <= 1) {
 				FireworkEffect effect = FireworkEffect.builder().with(org.bukkit.FireworkEffect.Type.BURST).withColor(Color.ORANGE)
 						.withColor(Color.RED).withTrail().withFlicker().build();
 				FireworkEffectPlayer fePlayer = new FireworkEffectPlayer();
-				for (int i = 0; i < 3; i++) {
-					try {
+				for (int i = 0; i < 3; i++) { try {
 						fePlayer.playFirework(coord.getBlock().getWorld(), coord.getLocation(), effect);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -978,13 +859,11 @@ public class Camp extends Buildable {
 		sb = new StructureBlock(new BlockCoord(b), this);
 		this.addCampBlock(sb.getCoord());
 		int campControlHitpoints;
-		try {
-			campControlHitpoints = CivSettings.getInteger(CivSettings.warConfig, "war.control_block_hitpoints_camp");
+		try { campControlHitpoints = CivSettings.getInteger(CivSettings.warConfig, "war.control_block_hitpoints_camp");
 		} catch (InvalidConfiguration e) {
 			e.printStackTrace();
 			campControlHitpoints = 100;
-		}
-		BlockCoord coord = new BlockCoord(b);		
+		} BlockCoord coord = new BlockCoord(b);		
 		this.controlBlocks.put(coord, new ControlPoint(coord, this, campControlHitpoints));
 	}
 	
@@ -1070,15 +949,14 @@ public class Camp extends Buildable {
 		String out = "";
 		for (Resident resident : members.values()) {
 			out += resident.getName()+" ";
-		}
-		return out;
+		} return out;
 	}
 	
 	public void onControlBlockHit(ControlPoint cp, World world, Player player) {
 		world.playSound(cp.getCoord().getLocation(), Sound.ANVIL_USE, 0.2f, 1);
 		world.playEffect(cp.getCoord().getLocation(), Effect.MOBSPAWNER_FLAMES, 0);
-		CivMessage.send(player, CivColor.LightGray+"Damaged Control Block ("+cp.getHitpoints()+" / "+cp.getMaxHitpoints()+")");
-		CivMessage.sendCamp(this, CivColor.Yellow+"One of our camp's Control Points is under attack!");
+		BasicMessages.sendControlBlock(player, "Damaged ("+cp.getHitpoints()+" / "+cp.getMaxHitpoints()+")");
+		BasicMessages.sendCamp(this, CivColor.BOLD+"Our Control Point at "+cp.getCoord().getLocation()+" is under attack!");
 	}
 	
 	public void onControlBlockDestroy(ControlPoint cp, World world, Player player) {		
@@ -1088,26 +966,23 @@ public class Camp extends Buildable {
 		FireworkEffect effect = FireworkEffect.builder().with(org.bukkit.FireworkEffect.Type.BURST).withColor(Color.YELLOW)
 				.withColor(Color.RED).withTrail().withFlicker().build();
 		FireworkEffectPlayer fePlayer = new FireworkEffectPlayer();
-		for (int i = 0; i < 3; i++) {
-			try {
+		for (int i = 0; i < 3; i++) { try {
 				fePlayer.playFirework(world, cp.getCoord().getLocation(), effect);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
-		boolean allDestroyed = true;
+		} boolean allDestroyed = true;
 		for (ControlPoint c : this.controlBlocks.values()) {
 			if (c.isDestroyed() == false) {
 				allDestroyed = false;
 				break;
 			}
-		}
-		
-		if (allDestroyed) {
-			CivMessage.sendCamp(this, CivColor.Rose+"Our camp has been destroyed!");
+		} if (allDestroyed) {
+			BasicMessages.sendCamp(this, CivColor.Red+"Our camp has been destroyed!");
+			BasicMessages.globalCamp("Camp "+this+" has been destroyed!");
 			this.destroy();
 		} else {
-			CivMessage.sendCamp(this, CivColor.Rose+"One of camps's Control Points has been destroyed!");
+			BasicMessages.sendCamp(this, CivColor.Rose+"Our Control Point at "+cp.getCoord().getLocation()+" has been destroyed!");
 		}
 	}
 	
@@ -1118,27 +993,21 @@ public class Camp extends Buildable {
 			Date now = new Date();
 			Resident resident = CivGlobal.getResident(player);
 			if (resident.isProtected()) {
-				CivMessage.sendError(player, "You are unable to damage camps while protected.");
+				BasicMessages.sendAError(player, "camp.Camp-996: You are currently protected and cannot destroy camps.");
 				return;
-			}
-			
-			if (now.after(getNextRaidDate())) {
+			} if (now.after(getNextRaidDate())) {
 				if (!cp.isDestroyed()) {
 					cp.damage(amount);
-					if (cp.isDestroyed()) {
-						onControlBlockDestroy(cp, world, player);
-					} else {
-						onControlBlockHit(cp, world, player);
+					if (cp.isDestroyed()) { onControlBlockDestroy(cp, world, player);
+					} else { onControlBlockHit(cp, world, player);
 					}
-				} else {
-					CivMessage.send(player, CivColor.Rose+"Control Block already destroyed.");
+				} else { BasicMessages.sendAError(player, "camp.Camp-1137: This Control Block is already destroyed.");
 				}
-			} else {
-				SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yy h:mm:ss a z");
+			} else { SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yy h:mm:ss a z");
 				Calendar cal = Calendar.getInstance();
 				cal.setTimeZone(TimeZone.getTimeZone(resident.getTimezone()));
 				sdf.setTimeZone(cal.getTimeZone());
-				CivMessage.send(player, CivColor.Rose+"Cannot damage control blocks for this camp until "+sdf.format(cal.getTime()));
+				BasicMessages.sendAError(player, "camp.Camp-1010: Cannot damage the Control Block(s) in this camp until "+sdf.format(cal.getTime()));
 			}
 		}
 	}
@@ -1154,8 +1023,7 @@ public class Camp extends Buildable {
 		Date now = new Date();
 		if (now.getTime() > raidEnd.getTime()) {
 			this.nextRaidDate.setTime(nextRaidDate.getTime() + 60*60*1000*24);
-		}
-		return this.nextRaidDate;
+		} return this.nextRaidDate;
 	}
 	
 	public boolean isSifterEnabled() {
@@ -1178,8 +1046,7 @@ public class Camp extends Buildable {
 		Resident owner = this.getOwner();
 		if (!owner.getTreasury().hasEnough(upgrade.cost)) {
 			throw new CivException("The owner does not have the required "+upgrade.cost+" coins to purchase this upgrade.");
-		}
-		this.upgrades.put(upgrade.id, upgrade);
+		} this.upgrades.put(upgrade.id, upgrade);
 		upgrade.processAction(this);
 		this.reprocessCommandSigns();
 		owner.getTreasury().withdraw(upgrade.cost);

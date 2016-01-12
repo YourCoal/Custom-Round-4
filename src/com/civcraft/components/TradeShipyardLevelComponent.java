@@ -162,10 +162,10 @@ public class TradeShipyardLevelComponent extends Component {
 			}
 			
 			AttributeUtil attrs = new AttributeUtil(stack);
-			String tradeable = attrs.getCivCraftProperty("tradeable");
-			if (tradeable == null)
+			String tradeableShipyard = attrs.getCivCraftProperty("tradeableShipyard");
+			if ( tradeableShipyard == null)
 				break;
-			if (tradeable.equalsIgnoreCase("true")) {
+			if ( tradeableShipyard.equalsIgnoreCase("true")) {
 				if (stacksToConsume < thisLevelConsumptions) {
 					stacksToConsume++;
 				} else {
@@ -368,16 +368,16 @@ public class TradeShipyardLevelComponent extends Component {
 			}
 			
 			AttributeUtil attrs = new AttributeUtil(stack);
-			if (attrs.getCivCraftProperty("tradeable").equalsIgnoreCase("true")) {
+			if (attrs.getCivCraftProperty("tradeableShipyard").equalsIgnoreCase("true")) {
 				if (stacksToConsume > 0) {
 					Integer countInStack = stack.getAmount();
-					String tradeValue = attrs.getCivCraftProperty("tradeValue");
+					String tradeValue = attrs.getCivCraftProperty("tradeShipyardValue");
 					if (tradeValue != null) {
 						double valueForStack = Double.parseDouble(tradeValue);
 						double moneyForStack = countInStack * valueForStack;
 						monetaryValue += moneyForStack;
 					} else {
-						CivLog.debug("tradeValue null for item");
+						CivLog.debug("tradeShipyardValue null for item");
 					}
 					processItemsFromStack(stack);
 					countConsumed += countInStack;

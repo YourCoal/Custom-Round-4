@@ -31,14 +31,10 @@ public class PlayerLocationCache {
 	public static void add(Player player) {
 		if (cache.containsKey(player.getName())) {
 			return;
-		}
-		
-		Resident resident = CivGlobal.getResident(player);
+		} Resident resident = CivGlobal.getResident(player);
 		if (resident == null) {
 			return;
-		}
-		
-		PlayerLocationCache pc = new PlayerLocationCache();
+		} PlayerLocationCache pc = new PlayerLocationCache();
 		pc.setCoord(new BlockCoord(player.getLocation()));
 		pc.setResident(resident);
 		pc.setName(player.getName());
@@ -46,8 +42,7 @@ public class PlayerLocationCache {
 		pc.setVanished(false);
 		if (CivSettings.hasVanishNoPacket) {
 			pc.setVanished(VanishNoPacketUtil.isVanished(player));
-		}
-		cache.put(pc.getName(), pc);
+		} cache.put(pc.getName(), pc);
 	}
 	
 	public static void remove(String playerName) {
@@ -59,19 +54,14 @@ public class PlayerLocationCache {
 		if (pc == null) {
 			add(player);
 			return;
-		}
-		
-		pc.getCoord().setFromLocation(player.getLocation());
+		} pc.getCoord().setFromLocation(player.getLocation());
 		pc.setDead(player.isDead());
 		Resident resident = CivGlobal.getResident(player);
 		if (resident != null) {
 			resident.onRoadTest(pc.getCoord(), player);
-		}
-		
-		if (CivSettings.hasVanishNoPacket) {
+		} if (CivSettings.hasVanishNoPacket) {
 			pc.setVanished(VanishNoPacketUtil.isVanished(player));
-		} else {
-			pc.setVanished(false);
+		} else { pc.setVanished(false);
 		}
 	}
 	
@@ -85,8 +75,7 @@ public class PlayerLocationCache {
 			if (pc.getCoord().distanceSquared(bcoord) < radiusSquared) {
 				list.add(pc);
 			}
-		}
-		return list;
+		} return list;
 	}
 	
 	public BlockCoord getCoord() {
@@ -123,8 +112,7 @@ public class PlayerLocationCache {
 		if (other instanceof PlayerLocationCache) {
 			PlayerLocationCache otherCache = (PlayerLocationCache)other;
 			return otherCache.getName().equalsIgnoreCase(this.getName());
-		}
-		return false;
+		} return false;
 	}
 	
 	public boolean isDead() {

@@ -13,12 +13,10 @@ public class CampUpdateTick extends CivAsyncTask {
 	@Override
 	public void run() {
 		if(camp.sifterLock.tryLock()) {
-			try {
-				if (camp.isSifterEnabled()) {
+			try { if (camp.isSifterEnabled()) {
 					camp.sifter.run(this);
 				}
-			} finally {
-				camp.sifterLock.unlock();
+			} finally { camp.sifterLock.unlock();
 			}
 		} 
 	}

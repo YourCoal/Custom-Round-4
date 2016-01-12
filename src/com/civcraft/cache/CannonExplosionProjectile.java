@@ -60,8 +60,7 @@ public class CannonExplosionProjectile {
 			loc.setZ(target.getZ());
 			this.onHit();
 			return true;
-		}
-		return false;
+		} return false;
 	}
 	
 	public void onHit() {
@@ -76,8 +75,7 @@ public class CannonExplosionProjectile {
 			launchExplodeFirework(location);
 			//loc.getWorld().createExplosion(location, 1.0f, true);
 			setFireAt(location, spread);
-		}
-		launchExplodeFirework(loc);
+		} launchExplodeFirework(loc);
 		//loc.getWorld().createExplosion(loc, 1.0f, true);
 		damagePlayers(loc, splash);
 		setFireAt(loc, spread);		
@@ -97,7 +95,6 @@ public class CannonExplosionProjectile {
 			public void run() {
 				Player player = playerQueue.poll();
 				Double damage = damageQueue.poll();
-				
 				while (player != null && damage != null) {
 					player.damage(damage);
 					player = playerQueue.poll();
@@ -117,29 +114,22 @@ public class CannonExplosionProjectile {
 				Queue<Player> playerList = new LinkedList<Player>();
 				Queue<Double> damageList = new LinkedList<Double>();
 				//PlayerLocationCache.lock.lock();
-				try {
-					for(PlayerLocationCache pc : PlayerLocationCache.getCache()) {
+				try { for (PlayerLocationCache pc : PlayerLocationCache.getCache()) {
 						if (pc.getCoord().distanceSquared(new BlockCoord(target)) < radius) {
-							try {
-								Player player = CivGlobal.getPlayer(pc.getName());
+							try { Player player = CivGlobal.getPlayer(pc.getName());
 								playerList.add(player);
 								damageList.add(Double.valueOf(damage));
-							} catch (CivException e) {
-								//player offline
+							} catch (CivException e) { //player offline
 							}
 						}
-					}
-					TaskMaster.syncTask(new SyncTask(playerList, damageList));
-				} finally {
-				//	PlayerLocationCache.lock.unlock();
+					} TaskMaster.syncTask(new SyncTask(playerList, damageList));
+				} finally { //PlayerLocationCache.lock.unlock();
 				}
 			}
-		}
-		TaskMaster.asyncTask(new AsyncTask(radius), 0);
+		} TaskMaster.asyncTask(new AsyncTask(radius), 0);
 	}
 	
-	private void setFireAt(Location loc, int radius) {
-		//Set the entire area on fire.
+	private void setFireAt(Location loc, int radius) { //Set the entire area on fire.
 		for (int x = -radius; x < radius; x++) {
 			for (int y = -3; y < 3; y++) {
 				for (int z = -radius; z < radius; z++) {

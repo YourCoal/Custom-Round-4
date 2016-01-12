@@ -54,11 +54,8 @@ public class CampBlock {
 	public boolean canBreak(String playerName) {
 		if (this.friendlyBreakable == false) {
 			return false;
-		}
-		
-		if (camp.hasMember(playerName)) {
+		} if (camp.hasMember(playerName)) {
 			return true;
-		}
-		return false;
+		} return false;
 	}
 }
