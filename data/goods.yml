@@ -72,6 +72,7 @@ land_goods:
  - id: 'good:aluminum'
    name: Aluminum
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_advanced_mining, buff_construction'
    material: 167
    material_data: 0
@@ -79,6 +80,7 @@ land_goods:
  - id: 'good:bananas'
    name: Bananas
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_year_of_plenty'
    material: 351
    material_data: 11
@@ -86,6 +88,7 @@ land_goods:
  - id: 'good:cocoa'
    name: Cocoa
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_rush, buff_noanarchy'
    material: 351
    material_data: 3
@@ -93,6 +96,7 @@ land_goods:
  - id: 'good:copper'
    name: Copper
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_construction, buff_advanced_mining'
    material: 369
    material_data: 0
@@ -100,6 +104,7 @@ land_goods:
  - id: 'good:corn'
    name: Corn
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_year_of_plenty'
    material: 425
    material_data: 11
@@ -107,6 +112,7 @@ land_goods:
  - id: 'good:cotton'
    name: Cotton
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_monopoly, buff_dirty_money'
    material: 351
    material_data: 15
@@ -114,6 +120,7 @@ land_goods:
  - id: 'good:fossils'
    name: Fossils
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_rush, buff_extraction, buff_advanced_testing'
    material: 88
    material_data: 0
@@ -121,6 +128,7 @@ land_goods:
  - id: 'good:gems'
    name: Gems
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_monopoly, buff_year_of_plenty, buff_barter'
    material: 388
    material_data: 0
@@ -128,6 +136,7 @@ land_goods:
  - id: 'good:grapes'
    name: Grapes
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_hedonism, buff_noanarchy'
    material: 351
    material_data: 2
@@ -135,6 +144,7 @@ land_goods:
  - id: 'good:guarana'
    name: Guarana
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_medecine, buff_year_of_plenty'
    material: 351
    material_data: 1
@@ -142,6 +152,7 @@ land_goods:
  - id: 'good:herbs'
    name: Herbs
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_medecine, buff_innovation, buff_advanced_testing'
    material: 175
    material_data: 3
@@ -149,6 +160,7 @@ land_goods:
  - id: 'good:horses'
    name: Horses
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_barter, buff_dirty_money'
    material: 329
    material_data: 0
@@ -156,6 +168,7 @@ land_goods:
  - id: 'good:incense'
    name: Incense
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_noanarchy, buff_medecine'
    material: 362
    material_data: 0
@@ -163,6 +176,7 @@ land_goods:
  - id: 'good:ivory'
    name: Ivory
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_hedonism, buff_dirty_money, buff_medecine'
    material: 406
    material_data: 0
@@ -170,6 +184,7 @@ land_goods:
  - id: 'good:limestone'
    name: Limestone
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_advanced_mining buff_extraction'
    material: 24
    material_data: 0
@@ -177,6 +192,7 @@ land_goods:
  - id: 'good:marble'
    name: Marble
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_barricade, buff_construction'
    material: 155
    material_data: 0
@@ -184,6 +200,7 @@ land_goods:
  - id: 'good:oil'
    name: Oil
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_innovation, buff_advanced_mining, buff_extraction, buff_fire_bomb'
    material: 351
    material_data: 0
@@ -191,6 +208,7 @@ land_goods:
  - id: 'good:pelts'
    name: Pelts
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_fine_art, buff_barter'
    material: 415
    material_data: 0
@@ -198,6 +216,7 @@ land_goods:
  - id: 'good:poultry'
    name: Poultry
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_year_of_plenty'
    material: 365
    material_data: 0
@@ -205,6 +224,7 @@ land_goods:
  - id: 'good:silk'
    name: Silk
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_hedonism, buff_fine_art'
    material: 287
    material_data: 0
@@ -212,6 +232,7 @@ land_goods:
  - id: 'good:silver'
    name: Silver
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_monopoly, buff_extraction'
    material: 265
    material_data: 0
@@ -219,6 +240,7 @@ land_goods:
  - id: 'good:soapstone'
    name: Soapstone
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_advanced_testing, buff_construction'
    material: 159
    material_data: 9
@@ -226,6 +248,7 @@ land_goods:
  - id: 'good:spice'
    name: Spice
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_year_of_plenty, buff_preservative'
    material: 295
    material_data: 0
@@ -233,6 +256,7 @@ land_goods:
  - id: 'good:tobacco'
    name: Tobacco
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_dirty_money, buff_espionage, buff_hedonism'
    material: 338
    material_data: 0
@@ -242,6 +266,7 @@ water_goods:
  - id: 'good:calamari'
    name: Calamari
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_hedonism, buff_fishing'
    material: 350
    material_data: 1
@@ -249,6 +274,7 @@ water_goods:
  - id: 'good:crabs'
    name: Crabs
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_fishing, buff_sabotage'
    material: 376
    material_data: 0
@@ -256,6 +282,7 @@ water_goods:
  - id: 'good:dyes'
    name: Dyes
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_fine_art'
    material: 281
    material_data: 0
@@ -263,6 +290,7 @@ water_goods:
  - id: 'good:pearls'
    name: Pearls
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_greed, buff_monopoly'
    material: 332
    material_data: 0
@@ -270,6 +298,7 @@ water_goods:
  - id: 'good:salmon'
    name: Salmon
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_fishing'
    material: 349
    material_data: 1
@@ -277,6 +306,7 @@ water_goods:
  - id: 'good:salt'
    name: Salt
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_preservative, buff_sabotage'
    material: 353
    material_data: 0
@@ -284,6 +314,7 @@ water_goods:
  - id: 'good:shrimp'
    name: Shrimp
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_fishing'
    material: 375
    material_data: 0
@@ -291,6 +322,7 @@ water_goods:
  - id: 'good:soap'
    name: Soap
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_innovation'
    material: 44
    material_data: 7
@@ -298,6 +330,7 @@ water_goods:
  - id: 'good:tuna'
    name: Tuna
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_fishing'
    material: 349
    material_data: 0
@@ -305,6 +338,7 @@ water_goods:
  - id: 'good:whales'
    name: Whales
    value: 100.0
+   valueString: '100 Coins'
    buffs: 'buff_advanced_testing, buff_barricade'
    material: 423
    material_data: 0

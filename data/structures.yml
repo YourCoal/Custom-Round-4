@@ -9,8 +9,6 @@ bank:
 #=======================================================#
 fishery:
     bonus_rate: 1.75
-    penalty_rate: 0.85
-
     tierMax: 10000
     t0_rate: 1.0
     t1_rate: 0.5
@@ -28,14 +26,12 @@ quarry:
     gold_rate: 0.025
     redstone_rate: 0.015
     diamond_rate: 0.0085
-    technocracy_rate: 1.75
     penalty_rate: 0.85
 #=======================================================#
 #==================> Trommel Settings <=================#
 #=======================================================#
 #Basic Information
 trommel:
-    technocracy_rate: 1.75
     penalty_rate: 0.85
 #Every Output (All Levels)
 trommel_global:
@@ -773,8 +769,8 @@ structures:
           value: '15'
 #
   - id: ti_fishery
-    template: quarry
-    template_y_shift: -10
+    template: fishery
+    template_y_shift: -1
     displayName: Fishery
     require_tech: 'tech_advanced_fortification'
     update_event: fishery_process

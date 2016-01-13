@@ -44,6 +44,8 @@ global:
    casual_mode: 'false'
    # Attempt to validate structures to make sure they're not floating.
    structure_validation: 'true'
+   # Minimum Build Height for Structures, Walls, and Roads. Default: 1
+   min_build_height: 1
 
 platinum:
 ### DAILY EVENTS ######
