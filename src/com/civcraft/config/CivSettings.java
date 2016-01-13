@@ -468,7 +468,17 @@ public class CivSettings {
 		switchItems.add(Material.GOLD_PLATE);
 		switchItems.add(Material.IRON_PLATE);
 		
-		
+		// 1.8 additions
+		switchItems.add(Material.BIRCH_DOOR);
+		switchItems.add(Material.SPRUCE_DOOR);
+		switchItems.add(Material.JUNGLE_DOOR);
+		switchItems.add(Material.ACACIA_DOOR);
+		switchItems.add(Material.DARK_OAK_DOOR);
+		switchItems.add(Material.BIRCH_FENCE_GATE);
+		switchItems.add(Material.SPRUCE_FENCE_GATE);
+		switchItems.add(Material.JUNGLE_FENCE_GATE);
+		switchItems.add(Material.ACACIA_FENCE_GATE);
+		switchItems.add(Material.DARK_OAK_FENCE_GATE);
 	}
 	
 	private static void initBlockPlaceExceptions() {

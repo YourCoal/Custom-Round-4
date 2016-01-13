@@ -187,6 +187,7 @@ public class CivGlobal {
 	public static boolean warningsEnabled = true;
 	public static boolean tradeEnabled = true;
 	public static boolean loadCompleted = false;
+	public static int minBuildHeight = 1;
 
 	public static ArrayList<Town> orphanTowns = new ArrayList<Town>();
 	public static ArrayList<Civilization> orphanCivs = new ArrayList<Civilization>();
@@ -198,7 +199,6 @@ public class CivGlobal {
 	public static boolean installMode = false;
 	
 	public static void loadGlobals() throws SQLException, CivException {
-		
 		CivLog.heading("Loading CivCraft Objects From Database");
 			
 		sdb = new SessionDatabase();
@@ -266,6 +266,12 @@ public class CivGlobal {
 		objective2.setDisplayName("OBJECTIVE2 NAME HERE");*/
 		
 		checkForInvalidStructures();
+		try {
+			minBuildHeight = CivSettings.getInteger(CivSettings.civConfig, "global.min_build_height");
+		} catch (InvalidConfiguration e) {
+			minBuildHeight = 1;
+			e.printStackTrace();
+		}
 		loadCompleted = true;
 	}
 	

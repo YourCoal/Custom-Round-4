@@ -30,6 +30,7 @@ public class ConfigTradeGood implements Comparable<ConfigTradeGood> {
 	public String id;
 	public String name;
 	public double value;
+	public String valueString;
 	//public String bonus;
 	public boolean water;
 	public HashMap<String, ConfigBuff> buffs = new HashMap<String, ConfigBuff>();
@@ -60,6 +61,7 @@ public class ConfigTradeGood implements Comparable<ConfigTradeGood> {
 			good.id = (String)g.get("id");
 			good.name = (String)g.get("name");
 			good.value = (Double)g.get("value");
+			good.valueString = (String)g.get("valueString");
 			loadBuffsString(good, (String)g.get("buffs"));
 			good.water = false;
 			good.material = (Integer)g.get("material");
@@ -79,6 +81,7 @@ public class ConfigTradeGood implements Comparable<ConfigTradeGood> {
 			good.id = (String)g.get("id");
 			good.name = (String)g.get("name");
 			good.value = (Double)g.get("value");
+			good.valueString = (String)g.get("valueString");
 			loadBuffsString(good, (String)g.get("buffs"));
 			good.water = true;
 			good.material = (Integer)g.get("material");
@@ -88,8 +91,6 @@ public class ConfigTradeGood implements Comparable<ConfigTradeGood> {
 			if (good.rarity == null) {
 				good.rarity = 1.0;
 			}
-
-			
 			waterGoods.put(good.id, good);
 			goods.put(good.id, good);
 		}

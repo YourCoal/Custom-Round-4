@@ -7,6 +7,7 @@ import java.util.Random;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.civcraft.config.CivSettings;
 import com.civcraft.exception.CivTaskAbortException;
 import com.civcraft.main.CivData;
 import com.civcraft.main.CivLog;
@@ -35,7 +36,7 @@ public class QuarryAsyncTask extends CivAsyncTask {
 		this.quarry = (Quarry)fishHatchery;
 	}
 	
-	public void processFisheryUpdate() {
+	public void processQuarryUpdate() {
 		if (!quarry.isActive()) {
 			debug(quarry, "Quarry inactive...");
 			return;
@@ -968,7 +969,24 @@ public class QuarryAsyncTask extends CivAsyncTask {
 		if (this.quarry.lock.tryLock()) {
 			try {
 				try {
-					processFisheryUpdate();
+					if (this.quarry.getTown().getGovernment().id.equals("gov_theocracy") || this.quarry.getTown().getGovernment().id.equals("gov_monarchy")) {
+						Random rand = new Random();
+						int randMax = 100;
+						int rand1 = rand.nextInt(randMax);
+						Double chance = CivSettings.getDouble(CivSettings.structureConfig, "quarry.penalty_rate")*100;
+						if (rand1 < chance) {
+							processQuarryUpdate();
+							debug(this.quarry, "Not penalized");
+						} else {
+							debug(this.quarry, "Skip Due to Penalty");
+						}
+					} else {
+						processQuarryUpdate();
+						if (this.quarry.getTown().getGovernment().id.equals("gov_technocracy")) {
+							debug(this.quarry, "Doing Bonus");
+							processQuarryUpdate();
+						}
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

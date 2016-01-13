@@ -4,19 +4,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.civcraft.config.CivSettings;
 import com.civcraft.exception.CivException;
-import com.civcraft.exception.InvalidConfiguration;
 import com.civcraft.main.CivLog;
 import com.civcraft.main.CivMessage;
 import com.civcraft.object.Buff;
+import com.civcraft.object.CultureChunk;
 import com.civcraft.object.StructureSign;
 import com.civcraft.object.Town;
 import com.civcraft.util.BlockCoord;
+import com.civcraft.util.ChunkCoord;
 import com.civcraft.util.CivColor;
 import com.civcraft.util.SimpleBlock;
 
@@ -30,6 +35,7 @@ public class Fishery extends Structure {
 	public static final double FISH_T4_RATE = CivSettings.getDoubleStructure("fishery.t4_rate"); //100%
 	
 	private int level = 1;
+	private Biome biome = null;
 	public int skippedCounter = 0;
 	public ReentrantLock lock = new ReentrantLock();
 	
@@ -60,16 +66,15 @@ public class Fishery extends Structure {
 	private double modifyChance(Double chance) {
 		double increase = chance*this.getTown().getBuffManager().getEffectiveDouble(Buff.FEEDING);
 		chance += increase;
-		try {
-			if (this.getTown().getGovernment().id.equals("gov_tribalism") ||
-					this.getTown().getGovernment().id.equals("gov_socialism")) {
-				chance *= CivSettings.getDouble(CivSettings.structureConfig, "fishery.bonus_rate");
-			} else if (this.getTown().getGovernment().id.equals("gov_bankocracy")){
-				chance *= CivSettings.getDouble(CivSettings.structureConfig, "fishery.penalty_rate");
-			}
-		} catch (InvalidConfiguration e) {
-			e.printStackTrace();
-		}
+//		try {
+//			if (this.getTown().getGovernment().id.equals("gov_tribalism") || this.getTown().getGovernment().id.equals("gov_socialism")) {
+//				chance *= CivSettings.getDouble(CivSettings.structureConfig, "fishery.bonus_rate");
+//			} else if (this.getTown().getGovernment().id.equals("gov_bankocracy")){
+//				chance *= CivSettings.getDouble(CivSettings.structureConfig, "fishery.penalty_rate");
+//			}
+//		} catch (InvalidConfiguration e) {
+//			e.printStackTrace();
+//		}
 		return chance;
 	}
 	
@@ -128,5 +133,28 @@ public class Fishery extends Structure {
 		} else {
 			CivMessage.send(player, CivColor.Rose+"Fishery Pool "+(special_id+1)+" is offline. Upgrade to activate.");
 		}
+	}
+	
+	public Biome getBiome() {
+		if (biome == null) {
+		try {
+			World world = Bukkit.getWorld("World");
+			BlockCoord block = this.getCenterLocation();
+			Chunk chunk = (Chunk) world.getChunkAt(block.getX(), block.getZ());
+			ChunkCoord coord = new ChunkCoord(chunk);
+			CultureChunk cc = new CultureChunk(this.getTown(), coord);
+			biome = cc.getBiome();
+			this.setBiome(cc.getBiome());
+		} catch (IllegalStateException e) {
+			
+		} finally {
+			biome = Biome.FOREST_HILLS;
+		}
+		}
+		return biome;
+	}
+
+	public void setBiome(Biome biome) {
+		this.biome = biome;
 	}
 }

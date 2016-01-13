@@ -10,7 +10,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.civcraft.config.CivSettings;
 import com.civcraft.exception.CivException;
-import com.civcraft.exception.InvalidConfiguration;
 import com.civcraft.main.CivLog;
 import com.civcraft.main.CivMessage;
 import com.civcraft.object.Buff;
@@ -90,15 +89,15 @@ public class Quarry extends Structure {
 	private double modifyChance(Double chance) {
 		double increase = chance*this.getTown().getBuffManager().getEffectiveDouble(Buff.EXTRACTION);
 		chance += increase;
-		try {
-			if (this.getTown().getGovernment().id.equals("gov_technocracy")) {
-				chance *= CivSettings.getDouble(CivSettings.structureConfig, "quarry.technocracy_rate");
-			} else if (this.getTown().getGovernment().id.equals("gov_theocracy") || this.getTown().getGovernment().id.equals("gov_monarchy")){
-				chance *= CivSettings.getDouble(CivSettings.structureConfig, "quarry.penalty_rate");
-			}
-		} catch (InvalidConfiguration e) {
-			e.printStackTrace();
-		}
+//		try {
+//			if (this.getTown().getGovernment().id.equals("gov_technocracy")) {
+//				chance *= CivSettings.getDouble(CivSettings.structureConfig, "quarry.technocracy_rate");
+//			} else if (this.getTown().getGovernment().id.equals("gov_theocracy") || this.getTown().getGovernment().id.equals("gov_monarchy")){
+//				chance *= CivSettings.getDouble(CivSettings.structureConfig, "quarry.penalty_rate");
+//			}
+//		} catch (InvalidConfiguration e) {
+//			e.printStackTrace();
+//		}
 		return chance;
 	}
 	

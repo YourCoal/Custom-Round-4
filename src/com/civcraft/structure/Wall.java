@@ -150,8 +150,19 @@ public class Wall extends Structure {
 	}
 	
 	@Override
-	public void resumeBuildFromTemplate() throws Exception
-	{
+	public void resumeBuildFromTemplate() throws Exception {
+	}
+	
+	public void deleteOnDisband() throws SQLException {
+		if (this.wallBlocks != null) {
+			for (WallBlock wb : this.wallBlocks.values()) {
+				wb.delete();
+			}
+		} if (wallChunks != null) {
+			for (ChunkCoord coord : wallChunks) {
+				CivGlobal.removeWallChunk(this, coord);
+			}
+		}
 	}
 	
 	@Override 

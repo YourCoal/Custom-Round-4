@@ -1264,17 +1264,15 @@ public class Civilization extends SQLObject {
 		LinkedList<Relation> deletedRelations = new LinkedList<Relation>();
 		for (Relation relation : this.getDiplomacyManager().getRelations()) {
 			deletedRelations.add(relation);
-		}
-		for (Relation relation : deletedRelations) {
-			try {
+		} for (Relation relation : deletedRelations) {
+			if (relation.getStatus() == Relation.Status.WAR) {
+					relation.setStatus(Relation.Status.NEUTRAL);
+				} try {
 				relation.delete();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-		}
-		
-		
-		/* Remove ourselves from the main global civ list and into a special conquered list. */
+		} /* Remove ourselves from the main global civ list and into a special conquered list. */
 		CivGlobal.removeCiv(this);
 		CivGlobal.addConqueredCiv(this);
 		this.conquered = true;

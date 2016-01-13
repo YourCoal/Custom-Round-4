@@ -1,21 +1,3 @@
-/*************************************************************************
- * 
- * AVRGAMING LLC
- * __________________
- * 
- *  [2013] AVRGAMING LLC
- *  All Rights Reserved.
- * 
- * NOTICE:  All information contained herein is, and remains
- * the property of AVRGAMING LLC and its suppliers,
- * if any.  The intellectual and technical concepts contained
- * herein are proprietary to AVRGAMING LLC
- * and its suppliers and may be covered by U.S. and Foreign Patents,
- * patents in process, and are protected by trade secret or copyright law.
- * Dissemination of this information or reproduction of this material
- * is strictly forbidden unless prior written permission is obtained
- * from AVRGAMING LLC.
- */
 package com.civcraft.populators;
 
 import java.sql.SQLException;
@@ -33,6 +15,7 @@ import org.bukkit.generator.BlockPopulator;
 import com.civcraft.config.ConfigTradeGood;
 import com.civcraft.main.CivData;
 import com.civcraft.main.CivGlobal;
+import com.civcraft.main.CivLog;
 import com.civcraft.object.ProtectedBlock;
 import com.civcraft.object.StructureSign;
 import com.civcraft.object.TradeGood;
@@ -83,6 +66,7 @@ public class TradeGoodPopulator extends BlockPopulator {
     		try {
 				pb.saveNow();
 			} catch (SQLException e) {
+				CivLog.warning("Unable to Protect Goodie Sign");
 				e.printStackTrace();
 			}    
     		} else {
@@ -93,8 +77,8 @@ public class TradeGoodPopulator extends BlockPopulator {
     	Block signBlock = top.getRelative(direction);
     	signBlock.setType(Material.WALL_SIGN);
     	//TODO make sign a structure sign?
-    	//          Civ.protectedBlockTable.put(Civ.locationHash(signBlock.getLocation()), 
-    	//          new ProtectedBlock(signBlock, null, null, null, ProtectedBlock.Type.TRADE_MARKER));
+    			//          Civ.protectedBlockTable.put(Civ.locationHash(signBlock.getLocation()), 
+    	//          		new ProtectedBlock(signBlock, null, null, null, ProtectedBlock.Type.TRADE_MARKER));
 
     	BlockState state = signBlock.getState();
 
@@ -103,10 +87,10 @@ public class TradeGoodPopulator extends BlockPopulator {
     		org.bukkit.material.Sign data = (org.bukkit.material.Sign)state.getData();
 
     		data.setFacingDirection(direction);
-    		sign.setLine(0, "Trade Resource");
-    		sign.setLine(1, "----");
-    		sign.setLine(2, good.name);
-    		sign.setLine(3, "");
+    		sign.setLine(0, "Trade Resource:");
+    		sign.setLine(1, good.name);
+    		sign.setLine(2, "Money per Hour:");
+    		sign.setLine(3, good.valueString);
     		sign.update(true);
 
     		StructureSign structSign = new StructureSign(new BlockCoord(signBlock), null);
@@ -115,13 +99,27 @@ public class TradeGoodPopulator extends BlockPopulator {
     		structSign.setText(sign.getLines());
     		structSign.setDirection(ItemManager.getData(sign.getData()));
     		CivGlobal.addStructureSign(structSign);
+            ProtectedBlock pbsign = new ProtectedBlock(new BlockCoord(signBlock), ProtectedBlock.Type.TRADE_MARKER);
+            CivGlobal.addProtectedBlock(pbsign);
+            if (sync) {
+                try {
+                	pbsign.saveNow();
+                    structSign.saveNow();
+                } catch (SQLException e) {
+                	e.printStackTrace();
+                }
+            } else {
+            	pbsign.save();
+                structSign.save();
+            }
     	}
+        
     	if (sync) {
-    	try {
-			new_good.saveNow();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	    	try {
+				new_good.saveNow();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
     	} else {
     		new_good.save();
     	}

@@ -8,7 +8,6 @@ import org.bukkit.Location;
 
 import com.civcraft.config.CivSettings;
 import com.civcraft.exception.CivException;
-import com.civcraft.exception.InvalidConfiguration;
 import com.civcraft.object.Buff;
 import com.civcraft.object.Town;
 import com.civcraft.util.BlockCoord;
@@ -248,15 +247,15 @@ public class Trommel extends Structure {
 	private double modifyChance(Double chance) {
 		double increase = chance*this.getTown().getBuffManager().getEffectiveDouble(Buff.EXTRACTION);
 		chance += increase;
-		try {
-			if (this.getTown().getGovernment().id.equals("gov_technocracy")) {
-				chance *= CivSettings.getDouble(CivSettings.structureConfig, "trommel.technocracy_rate");
-			} else if (this.getTown().getGovernment().id.equals("gov_anarchy")){
-				chance *= CivSettings.getDouble(CivSettings.structureConfig, "trommel.penalty_rate");
-			}
-		} catch (InvalidConfiguration e) {
-			e.printStackTrace();
-		}
+//		try {
+//			if (this.getTown().getGovernment().id.equals("gov_technocracy")) {
+//				chance *= CivSettings.getDouble(CivSettings.structureConfig, "trommel.technocracy_rate");
+//			} else if (this.getTown().getGovernment().id.equals("gov_anarchy")){
+//				chance *= CivSettings.getDouble(CivSettings.structureConfig, "trommel.penalty_rate");
+//			}
+//		} catch (InvalidConfiguration e) {
+//			e.printStackTrace();
+//		}
 		return chance;
 	}
 	

@@ -8,6 +8,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.civcraft.config.CivSettings;
 import com.civcraft.exception.CivTaskAbortException;
 import com.civcraft.lorestorage.LoreMaterial;
 import com.civcraft.main.CivData;
@@ -253,7 +254,7 @@ public class FisheryAsyncTask extends CivAsyncTask {
 	}
 	
 	private int getBiome() {
-		Biome biome = this.fishHatchery.getCorner().getBlock().getBiome();
+		Biome biome = this.fishHatchery.getBiome();
 		if (biome.equals(Biome.BIRCH_FOREST_HILLS) ||
 			biome.equals(Biome.BIRCH_FOREST_MOUNTAINS) ||
 			biome.equals(Biome.BIRCH_FOREST_HILLS_MOUNTAINS) ||
@@ -521,7 +522,24 @@ public class FisheryAsyncTask extends CivAsyncTask {
 		if (this.fishHatchery.lock.tryLock()) {
 			try {
 				try {
-					processFisheryUpdate();
+					if (this.fishHatchery.getTown().getGovernment().id.equals("gov_tribalism") || this.fishHatchery.getTown().getGovernment().id.equals("gov_socialism")) {
+						Random rand = new Random();
+						int randMax = 100;
+						int rand1 = rand.nextInt(randMax);
+						Double chance = CivSettings.getDouble(CivSettings.structureConfig, "fishery.penalty_rate")*100;
+						if (rand1 < chance) {
+							processFisheryUpdate();
+							debug(this.fishHatchery, "Not penalized");
+						} else {
+							debug(this.fishHatchery, "Skip Due to Penalty");
+						}
+					} else {
+						processFisheryUpdate();
+						if (this.fishHatchery.getTown().getGovernment().id.equals("gov_bankocracy")) {
+							debug(this.fishHatchery, "Doing Bonus");
+							processFisheryUpdate();
+						}
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -410,37 +410,81 @@ public class Structure extends Buildable {
 		SQL.updateNamedObject(this, hashmap, TABLE_NAME);
 	}
 	
+	public void deleteSkipUndo() throws SQLException {
+		super.delete();
+		if (this.getTown() != null) {
+			/* Release trade goods if we are a trade outpost. */
+			if (this instanceof TradeOutpost || this instanceof FishingBoat) {
+				//TODO move to trade outpost delete..
+				TradeOutpost outpost1 = (TradeOutpost)this;
+				FishingBoat outpost2 = (FishingBoat)this;
+				if (outpost1.getGood() != null) {
+					outpost1.getGood().setStruct(null);
+					outpost1.getGood().setTown(null);
+					outpost1.getGood().setCiv(null);
+					outpost1.getGood().save();
+				} else if (outpost2.getGood() != null) {
+					outpost2.getGood().setStruct(null);
+					outpost2.getGood().setTown(null);
+					outpost2.getGood().setCiv(null);
+					outpost2.getGood().save();
+				}
+			} if (!(this instanceof Wall || this instanceof Road)) {
+				try {
+					this.undoFromTemplate();	
+				} catch (IOException | CivException e1) {
+					e1.printStackTrace();
+					this.fancyDestroyStructureBlocks();
+				}
+				CivGlobal.removeStructure(this);
+				this.getTown().removeStructure(this);
+				this.unbindStructureBlocks();
+			} else {
+				CivGlobal.removeStructure(this);
+				this.getTown().removeStructure(this);
+				this.unbindStructureBlocks();
+				if (this instanceof Road) {
+					Road road = (Road)this;
+					road.deleteOnDisband();
+				} else if (this instanceof Wall) {
+					Wall wall = (Wall)this;
+					wall.deleteOnDisband();
+				}
+			}
+		}
+		SQL.deleteNamedObject(this, TABLE_NAME);
+	}
+	
 	@Override
 	public void delete() throws SQLException {
 		super.delete();
 		
 		if (this.getTown() != null) {
 			/* Release trade goods if we are a trade outpost. */
-			if (this instanceof TradeOutpost) {
+			if (this instanceof TradeOutpost || this instanceof FishingBoat) {
 				//TODO move to trade outpost delete..
-				TradeOutpost outpost = (TradeOutpost)this;
-				
-				if (outpost.getGood() != null) {
-					outpost.getGood().setStruct(null);
-					outpost.getGood().setTown(null);
-					outpost.getGood().setCiv(null);
-					outpost.getGood().save();
+				TradeOutpost outpost1 = (TradeOutpost)this;
+				FishingBoat outpost2 = (FishingBoat)this;
+				if (outpost1.getGood() != null) {
+					outpost1.getGood().setStruct(null);
+					outpost1.getGood().setTown(null);
+					outpost1.getGood().setCiv(null);
+					outpost1.getGood().save();
+				} else if (outpost2.getGood() != null) {
+					outpost2.getGood().setStruct(null);
+					outpost2.getGood().setTown(null);
+					outpost2.getGood().setCiv(null);
+					outpost2.getGood().save();
 				}
-			}
-			
-			try {
+			} try {
 				this.undoFromTemplate();	
 			} catch (IOException | CivException e1) {
 				e1.printStackTrace();
 				this.fancyDestroyStructureBlocks();
-			}
-						
-			CivGlobal.removeStructure(this);
+			} CivGlobal.removeStructure(this);
 			this.getTown().removeStructure(this);
 			this.unbindStructureBlocks();
-		}
-		
-		SQL.deleteNamedObject(this, TABLE_NAME);
+		} SQL.deleteNamedObject(this, TABLE_NAME);
 	}
 
 	@Override

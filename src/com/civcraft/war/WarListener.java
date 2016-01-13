@@ -130,8 +130,7 @@ public class WarListener implements Listener {
 			return;
 		}
 		
-		if (event.getEntityType().equals(EntityType.PRIMED_TNT) ||
-				event.getEntityType().equals(EntityType.MINECART_TNT)) {
+		if (event.getEntityType().equals(EntityType.PRIMED_TNT) || event.getEntityType().equals(EntityType.MINECART_TNT) || event.getEntityType().equals(EntityType.CREEPER)) {
 			
 			int yield1;
 			try {
