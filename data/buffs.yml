@@ -159,6 +159,13 @@ buffs:
       value: '3.0'
       stackable: true
       parent:
+#
+    - id: 'buff_noanarchy'
+      name: 'No Anarchy'
+      description: 'Civilization does not experience anarchy when switching governments.'
+      value: '0'
+      stackable: false
+      parent:
 # Great Pyramid Buffs
     - id: 'buff_pyramid_cottage_consume'
       name: 'Pyramid Reduced Bread Consumption'
