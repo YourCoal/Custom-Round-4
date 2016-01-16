@@ -50,8 +50,8 @@ buffs:
 #
     - id: 'buff_advanced_water_trading'
       name: 'Advanced Water Trading'
-      description: 'Increases the trade ship production by <lightgreen>35%<r>'
-      value: '0.35'
+      description: 'Increases the trade ship production by <lightgreen>10%<r>'
+      value: '0.10'
       stackable: false
       parent:
 #
@@ -158,13 +158,6 @@ buffs:
       description: 'Grants an extra <lightgreen>3<r> happiness'
       value: '3.0'
       stackable: true
-      parent:
-#
-    - id: 'buff_noanarchy'
-      name: 'No Anarchy'
-      description: 'Civilization does not experience anarchy when switching governments.'
-      value: '0'
-      stackable: false
       parent:
 # Great Pyramid Buffs
     - id: 'buff_pyramid_cottage_consume'

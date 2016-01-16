@@ -137,10 +137,10 @@ public class Lab extends Structure {
 		double rate = 1;
 		rate += this.getTown().getBuffManager().getEffectiveDouble(Buff.ADVANCED_TESTING);
 		
-		if (this.getCiv().hasTechnology("tech_atom_developing")) {
+		if (this.getCiv().hasTechnology("tech_geology_advancement")) {
 			double bonus;
 			try {
-				bonus = CivSettings.getDouble(CivSettings.techsConfig, "atom_developing_lab_buff");
+				bonus = CivSettings.getDouble(CivSettings.techsConfig, "tech_lab_buff");
 				rate *= bonus;
 			} catch (InvalidConfiguration e) {
 				e.printStackTrace();

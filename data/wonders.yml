@@ -3,7 +3,7 @@ wonders:
    template: the_great_library
    template_y_shift: 0
    displayName: The Great Library
-   require_tech: 'tech_great_library'
+   require_tech: 'tech_the_great_library'
    limit: 1
    cost: 575000.0
    upkeep: 0.0
@@ -16,7 +16,7 @@ wonders:
    template: the_great_pyramid
    template_y_shift: 0
    displayName: The Great Pyramid
-   require_tech: 'tech_great_pyramid'
+   require_tech: 'tech_the_great_pyramid'
    limit: 1
    cost: 750000.0
    upkeep: 0.0
@@ -29,7 +29,7 @@ wonders:
    template: the_hanging_gardens
    template_y_shift: 0
    displayName: The Hanging Gardens
-   require_tech: 'tech_hanging_gardens'
+   require_tech: 'tech_the_hanging_gardens'
    limit: 1
    cost: 1000000.0
    upkeep: 0.0
@@ -42,7 +42,7 @@ wonders:
    template: the_colossus
    template_y_shift: 0
    displayName: The Colossus
-   require_tech: 'tech_colossus'
+   require_tech: 'tech_the_colossus'
    limit: 1
    cost: 675000.0
    upkeep: 0.0
@@ -55,7 +55,7 @@ wonders:
    template: notre_dame
    template_y_shift: 0
    displayName: Notre Dame de Paris
-   require_tech: 'tech_notre_dame'
+   require_tech: 'tech_notre_dame_de_paris'
    limit: 1
    cost: 1500000.0
    upkeep: 0.0

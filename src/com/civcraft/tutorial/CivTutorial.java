@@ -37,11 +37,7 @@ public class CivTutorial {
 			elementInfoInventory.setItem(0, LoreGuiItem.build(CivColor.LightBlue+ChatColor.BOLD+"What Are Elements?", ItemManager.getId(Material.PAPER), 0, 
 				ChatColor.RESET+"Coming soon"
 			));
-			ItemStack backButton = LoreGuiItem.build("Back", ItemManager.getId(Material.MAP), 0, ChatColor.RESET+"Back to Categories");
-			backButton = LoreGuiItem.setAction(backButton, "OpenInventory");
-			backButton = LoreGuiItem.setActionData(backButton, "invType", "showGuiInv");
-			backButton = LoreGuiItem.setActionData(backButton, "invName", guiInventory.getName());
-			craftingHelpInventory.setItem(LoreGuiItem.MAX_INV_SIZE-1, backButton);
+			
 			LoreGuiItemListener.guiInventories.put(elementInfoInventory.getName(), elementInfoInventory);
 		}
 		
@@ -52,18 +48,19 @@ public class CivTutorial {
 	
 	public static void showServerInfoInventory(Player player) {	
 		if (serverInfoInventory == null) {
-			serverInfoInventory = Bukkit.getServer().createInventory(player, 9*2, "Server Links");
+			serverInfoInventory = Bukkit.getServer().createInventory(player, 9*1, "Server Links");
 			
 			serverInfoInventory.setItem(0, LoreGuiItem.build(CivColor.LightBlue+ChatColor.BOLD+"Website", ItemManager.getId(Material.PAPER), 0, 
-				ChatColor.RESET+"http://rapidegaming.enjin.com/"
+				ChatColor.RESET+"http://leviathangamingmc.enjin.com/"
 			));
 			
 			serverInfoInventory.setItem(2, LoreGuiItem.build(CivColor.LightBlue+ChatColor.BOLD+"Voting", ItemManager.getId(Material.BEACON), 0, 
-				ChatColor.RESET+"http://tinyurl.com/rgnvotetemp/"
+//				ChatColor.RESET+"http://tinyurl.com/rgnvotetemp/"
+				ChatColor.RESET+"Currently Down"
 			));
 			
 			serverInfoInventory.setItem(4, LoreGuiItem.build(CivColor.LightBlue+ChatColor.BOLD+"Dynmap", ItemManager.getId(Material.MAP), 0, 
-				ChatColor.RESET+"http://mc.rapidegaming.com:8123/"
+				ChatColor.RESET+"http://mc.leviathangaming.ca:8123/"
 			));
 			
 			serverInfoInventory.setItem(6, LoreGuiItem.build(CivColor.LightBlue+ChatColor.BOLD+"Wiki", ItemManager.getId(Material.ENDER_PORTAL_FRAME), 0, 
@@ -73,11 +70,6 @@ public class CivTutorial {
 			serverInfoInventory.setItem(8, LoreGuiItem.build(CivColor.LightBlue+ChatColor.BOLD+"YourCoal's YouTube", ItemManager.getId(Material.REDSTONE_BLOCK), 0, 
 				ChatColor.RESET+"https://www.youtube.com/user/cpcole556"
 			));
-			ItemStack backButton = LoreGuiItem.build("Back", ItemManager.getId(Material.MAP), 0, ChatColor.RESET+"Back to Categories");
-			backButton = LoreGuiItem.setAction(backButton, "OpenInventory");
-			backButton = LoreGuiItem.setActionData(backButton, "invType", "showGuiInv");
-			backButton = LoreGuiItem.setActionData(backButton, "invName", guiInventory.getName());
-			craftingHelpInventory.setItem(LoreGuiItem.MAX_INV_SIZE-1, backButton);
 			LoreGuiItemListener.guiInventories.put(serverInfoInventory.getName(), serverInfoInventory);
 		}
 		
@@ -164,31 +156,10 @@ public class CivTutorial {
 				ChatColor.RESET+"along with how to craft them.",
 				ChatColor.RESET+"Good luck!"
 			));
-			
-			for (ConfigMaterialCategory cat : ConfigMaterialCategory.getCategories()) {
-				for (ConfigMaterial mat : cat.materials.values()) {
-					if (mat.id.equals("mat_found_civ")) {
-						ItemStack stack = getInfoBookForItem(mat.id);
-						if (stack != null) {
-							stack = LoreGuiItem.setAction(stack, "TutorialRecipe");
-							tutorialInventory.setItem(19,LoreGuiItem.asGuiItem(stack));
-						}
-					} else if (mat.id.equals("mat_found_camp")) {
-						ItemStack stack = getInfoBookForItem(mat.id);
-						if (stack != null) {
-							stack = LoreGuiItem.setAction(stack, "TutorialRecipe");
-							tutorialInventory.setItem(18,LoreGuiItem.asGuiItem(stack));
-						}
-					}
-				}
-			} /* Add back buttons. */
-			ItemStack backButton = LoreGuiItem.build("Back", ItemManager.getId(Material.MAP), 0, ChatColor.RESET+"Back to Categories");
-			backButton = LoreGuiItem.setAction(backButton, "OpenInventory");
-			backButton = LoreGuiItem.setActionData(backButton, "invType", "showGuiInv");
-			backButton = LoreGuiItem.setActionData(backButton, "invName", guiInventory.getName());
-			tutorialInventory.setItem(26, backButton);
 			LoreGuiItemListener.guiInventories.put(tutorialInventory.getName(), tutorialInventory);
-		} if (player != null && player.isOnline() && player.isValid()) {
+		}
+		
+		if (player != null && player.isOnline() && player.isValid()) {
 			player.openInventory(tutorialInventory);	
 		}
 	}
@@ -237,6 +208,8 @@ public class CivTutorial {
 					identifier = ItemManager.getId(Material.RAW_FISH);
 				} else if (cat.name.contains("Dyes")) {
 					identifier = ItemManager.getId(Material.BOWL);
+				} else if (cat.name.contains("Tools")) {
+					identifier = ItemManager.getId(Material.SHEARS);
 				} else if (cat.name.contains("Special")) {
 					identifier = ItemManager.getId(Material.BEACON);
 				} else if (cat.name.contains("Tier 1 Material")) {
@@ -277,12 +250,6 @@ public class CivTutorial {
 				inv.setItem(LoreGuiItem.MAX_INV_SIZE-1, backButton);
 				LoreGuiItemListener.guiInventories.put(inv.getName(), inv);
 			}
-			ItemStack backButton = LoreGuiItem.build("Back", ItemManager.getId(Material.MAP), 0, ChatColor.RESET+"Back to Categories");
-			backButton = LoreGuiItem.setAction(backButton, "OpenInventory");
-			backButton = LoreGuiItem.setActionData(backButton, "invType", "showGuiInv");
-			backButton = LoreGuiItem.setActionData(backButton, "invName", guiInventory.getName());
-			craftingHelpInventory.setItem(LoreGuiItem.MAX_INV_SIZE-1, backButton);
-			LoreGuiItemListener.guiInventories.put(craftingHelpInventory.getName(), craftingHelpInventory);
 		}
 		player.openInventory(craftingHelpInventory);
 	}

@@ -12,71 +12,65 @@ items:
 potions:
    - name: 'Night Vision 3:00'
      data: 8230
-     require_tech: 'tech_fermentation'
+     require_tech: 'tech_experimentation'
 #
    - name: 'Night Vision 8:00'
      data: 8262
-     require_tech: 'tech_fermentation'
+     require_tech: 'tech_experimentation'
 #
    - name: 'Water Breathing 3:00'
      data: 8237
-     require_tech: 'tech_fermentation'
+     require_tech: 'tech_experimentation'
 #
    - name: 'Water Breathing 8:00'
      data: 8269
-     require_tech: 'tech_fermentation'
+     require_tech: 'tech_experimentation'
 #
    - name: 'Instant Health I'
      data: 8261
-     require_tech: 'tech_experimentation'
+     require_tech: 'tech_malting'
 #
    - name: 'Speed I 3:00'
      data: 8194
-     require_tech: 'tech_experimentation'
+     require_tech: 'tech_malting'
 #
    - name: 'Fire Resistance 3:00'
      data: 8227
-     require_tech: 'tech_experimentation'
+     require_tech: 'tech_malting'
 #
    - name: 'Speed I 8:00'
      data: 8258
-     require_tech: 'tech_malting'
+     require_tech: 'tech_alchemy'
 #
    - name: 'Leaping I 3:00'
      data: 8203
-     require_tech: 'tech_malting'
+     require_tech: 'tech_alchemy'
 #
    - name: 'Regeneration I 0:45'
      data: 8193
-     require_tech: 'tech_malting'
+     require_tech: 'tech_chemistry'
 #
    - name: 'Instant Health II'
      data: 8229
-     require_tech: 'tech_alchemy'
+     require_tech: 'tech_chemistry'
 #When the atom developing tech is researched, make these double.
-atom_developing_windmill_buff: 2.0
-atom_developing_cottage_buff: 2.0
-atom_developing_mine_buff: 2.0
-atom_developing_lab_buff: 2.0
+tech_windmill_buff: 2.0
+tech_cottage_buff: 2.0
+tech_mine_buff: 2.0
+tech_lab_buff: 2.0
 #
 techs:
 #==============================#
 #==========> Tier 1 <==========#
 #==============================#
-   - id: 'tech_religion'
-     name: 'Religion'
+   - id: 'tech_armory'
+     name: 'Armory'
      beaker_cost: 500.0
      cost: 5000.0
      points: 50
 #
-   - id: 'tech_agriculture'
-     name: 'Agriculture'
-     beaker_cost: 500.0
-     cost: 5000.0
-     points: 50
-#
-   - id: 'tech_forestry'
-     name: 'Forestry'
+   - id: 'tech_lumber'
+     name: 'Lumber'
      beaker_cost: 500.0
      cost: 5000.0
      points: 50
@@ -87,341 +81,295 @@ techs:
      cost: 5000.0
      points: 50
 #
-   - id: 'tech_iron'
-     name: 'Iron'
+   - id: 'tech_agriculture'
+     name: 'Agriculture'
+     beaker_cost: 500.0
+     cost: 5000.0
+     points: 50
+#
+   - id: 'tech_religion'
+     name: 'Religion'
      beaker_cost: 500.0
      cost: 5000.0
      points: 50
 #==============================#
 #==========> Tier 2 <==========#
 #==============================#
-   - id: 'tech_banking'
-     name: 'Banking'
-     beaker_cost: 2000.0
+   - id: 'tech_knitting'
+     name: 'Knitting'
+     beaker_cost: 1500.0
      cost: 15000.0
-     points: 200
-     require_techs: 'tech_religion'
-#
-   - id: 'tech_pottery'
-     name: 'Pottery'
-     beaker_cost: 2000.0
-     cost: 15000.0
-     points: 200
-     require_techs: 'tech_agriculture'
-#
-   - id: 'tech_animal_husbandry'
-     name: 'Animal Husbandry'
-     beaker_cost: 2000.0
-     cost: 15000.0
-     points: 200
-     require_techs: 'tech_pottery'
-#
-   - id: 'tech_extraction'
-     name: 'Extraction'
-     beaker_cost: 2000.0
-     cost: 15000.0
-     points: 200
-     require_techs: 'tech_mining'
-#
-   - id: 'tech_fermentation'
-     name: 'Fermentation'
-     beaker_cost: 2000.0
-     cost: 15000.0
-     points: 200
-     require_techs: 'tech_mining'
+     points: 150
+     require_techs: 'tech_armory'
 #
    - id: 'tech_welding'
      name: 'Welding'
-     beaker_cost: 2000.0
+     beaker_cost: 1500.0
      cost: 15000.0
-     points: 200
-     require_techs: 'tech_iron'
+     points: 150
+     require_techs: 'tech_armory'
+#
+   - id: 'tech_exchange'
+     name: 'Exchange'
+     beaker_cost: 1500.0
+     cost: 15000.0
+     points: 150
+#
+   - id: 'tech_feeding'
+     name: 'Feeding'
+     beaker_cost: 1500.0
+     cost: 15000.0
+     points: 150
+#
+   - id: 'tech_extraction'
+     name: 'Extraction'
+     beaker_cost: 1500.0
+     cost: 15000.0
+     points: 150
+     require_techs: 'tech_mining'
+#
+   - id: 'tech_pottery'
+     name: 'Pottery'
+     beaker_cost: 1500.0
+     cost: 15000.0
+     points: 150
+     require_techs: 'tech_agriculture'
+#
+   - id: 'tech_banking'
+     name: 'Banking'
+     beaker_cost: 1500.0
+     cost: 15000.0
+     points: 150
+     require_techs: 'tech_religion'
+#
+   - id: 'tech_experimentation'
+     name: 'Experimentation'
+     beaker_cost: 1500.0
+     cost: 15000.0
+     points: 150
+     require_techs: 'tech_banking'
 #==============================#
 #==========> Tier 3 <==========#
 #==============================#
-   - id: 'tech_mysticism'
-     name: 'Mysticism'
-     beaker_cost: 4500.0
-     cost: 35000.0
-     points: 450
-     require_techs: 'tech_banking'
-#
-   - id: 'tech_masonry'
-     name: 'Masonry'
-     beaker_cost: 4500.0
-     cost: 35000.0
-     points: 450
-     require_techs: 'tech_pottery'
-#
-   - id: 'tech_fortification'
-     name: 'Fortification'
-     beaker_cost: 4500.0
-     cost: 35000.0
-     points: 450
-     require_techs: 'tech_pottery'
-#
-   - id: 'tech_commerce'
-     name: 'Commerce'
-     beaker_cost: 4500.0
-     cost: 35000.0
-     points: 450
-     require_techs: 'tech_forestry'
-#
-   - id: 'tech_production'
-     name: 'Production'
-     beaker_cost: 4500.0
-     cost: 35000.0
-     points: 450
-     require_techs: 'tech_extraction'
-#
-   - id: 'tech_newbie_mechanics'
-     name: 'Newbie Mechanics'
-     beaker_cost: 4500.0
-     cost: 35000.0
-     points: 450
-     require_techs: 'tech_iron'
-#==============================#
-#==========> Tier 4 <==========#
-#==============================#
-   - id: 'tech_code_of_laws'
-     name: 'Code of Laws'
-     beaker_cost: 17500.0
-     cost: 70000.0
-     points: 1750
-     require_techs: 'tech_mysticism'
-#
-   - id: 'tech_breeding'
-     name: 'Breeding'
-     beaker_cost: 17500.0
-     cost: 70000.0
-     points: 1750
-     require_techs: 'tech_animal_husbandry'
+   - id: 'tech_molding'
+     name: 'Molding'
+     beaker_cost: 4000.0
+     cost: 40000.0
+     points: 400
+     require_techs: 'tech_knitting:tech_welding'
 #
    - id: 'tech_artillery'
      name: 'Artillery'
-     beaker_cost: 17500.0
-     cost: 70000.0
-     points: 1750
-     require_techs: 'tech_masonry:tech_advanced_fortification'
+     beaker_cost: 4000.0
+     cost: 40000.0
+     points: 400
+     require_techs: 'tech_knitting:tech_welding'
 #
-   - id: 'tech_advanced_fortification'
-     name: 'Advanced Fortification'
-     beaker_cost: 17500.0
-     cost: 70000.0
-     points: 1750
-     require_techs: 'tech_fortification'
+   - id: 'tech_breeding'
+     name: 'Breeding'
+     beaker_cost: 4000.0
+     cost: 40000.0
+     points: 400
+     require_techs: 'tech_exchange:tech_feeding'
 #
-   - id: 'tech_sailing'
-     name: 'Sailing'
-     beaker_cost: 17500.0
-     cost: 70000.0
-     points: 1750
-     require_techs: 'tech_commerce:tech_fortification'
-#
-   - id: 'tech_trading'
-     name: 'Trading'
-     beaker_cost: 17500.0
-     cost: 70000.0
-     points: 1750
-     require_techs: 'tech_sailing'
-#
-   - id: 'tech_engineering'
-     name: 'Engineering'
-     beaker_cost: 17500.0
-     cost: 70000.0
-     points: 1750
-     require_techs: 'tech_production'
-#
-   - id: 'tech_bronze'
-     name: 'Bronze'
-     beaker_cost: 17500.0
-     cost: 70000.0
-     points: 1750
-     require_techs: 'tech_iron:tech_welding'
-#==============================#
-#==========> Tier 5 <==========#
-#==============================#
-   - id: 'tech_writing'
-     name: 'Writing'
-     beaker_cost: 30000.0
-     cost: 125000.0
-     points: 3000
-     require_techs: 'tech_code_of_laws'
-#
-   - id: 'tech_gunpowder'
-     name: 'Gunpowder'
-     beaker_cost: 30000.0
-     cost: 125000.0
-     points: 3000
-     require_techs: 'tech_artillery:tech_inspection'
-#
-   - id: 'tech_inspection'
-     name: 'Inspection'
-     beaker_cost: 30000.0
-     cost: 125000.0
-     points: 3000
-     require_techs: 'tech_advanced_fortification:tech_trading'
-#
-   - id: 'tech_specialization'
-     name: 'Specialization'
-     beaker_cost: 30000.0
-     cost: 125000.0
-     points: 3000
-     require_techs: 'tech_engineering'
-#
-   - id: 'tech_smithing'
-     name: 'Smithing'
-     beaker_cost: 30000.0
-     cost: 125000.0
-     points: 3000
-     require_techs: 'tech_bronze:tech_welding'
-#
-   - id: 'tech_improved_mechanics'
-     name: 'Improved Mechanics'
-     beaker_cost: 30000.0
-     cost: 125000.0
-     points: 3000
-     require_techs: 'tech_bronze:tech_newbie_mechanics'
-#==============================#
-#==========> Tier 6 <==========#
-#==============================#
-   - id: 'tech_monarchy'
-     name: 'Monarchy'
-     beaker_cost: 62500.0
-     cost: 400000.0
-     points: 6250
-     require_techs: 'tech_writing'
-#
-   - id: 'tech_nurturing'
-     name: 'Nurturing'
-     beaker_cost: 62500.0
-     cost: 400000.0
-     points: 6250
+   - id: 'tech_animal_husbandry'
+     name: 'Animal Husbandry'
+     beaker_cost: 4000.0
+     cost: 40000.0
+     points: 400
      require_techs: 'tech_breeding'
 #
-   - id: 'tech_innovation'
-     name: 'Innovation'
-     beaker_cost: 62500.0
-     cost: 400000.0
-     points: 6250
-     require_techs: 'tech_inspection:tech_engineering'
+   - id: 'tech_production'
+     name: 'Production'
+     beaker_cost: 4000.0
+     cost: 40000.0
+     points: 400
+     require_techs: 'tech_extraction'
 #
-#   - id: 'tech_cargo'
-#     name: 'Cargo'
-#     beaker_cost: 62500.0
-#     cost: 400000.0
-#     points: 6250
-#     require_techs: 'tech_trading'
+   - id: 'tech_masonry'
+     name: 'Masonry'
+     beaker_cost: 4000.0
+     cost: 40000.0
+     points: 400
+     require_techs: 'tech_pottery'
+#
+   - id: 'tech_mysticism'
+     name: 'Mysticism'
+     beaker_cost: 4000.0
+     cost: 40000.0
+     points: 400
+     require_techs: 'tech_banking'
 #
    - id: 'tech_malting'
      name: 'Malting'
-     beaker_cost: 62500.0
-     cost: 400000.0
-     points: 6250
-     require_techs: 'tech_inspection:tech_engineering'
-#
-   - id: 'tech_steel'
-     name: 'Steel'
-     beaker_cost: 62500.0
-     cost: 400000.0
-     points: 6250
-     require_techs: 'tech_bronze:tech_smithing'
+     beaker_cost: 4000.0
+     cost: 40000.0
+     points: 400
+     require_techs: 'tech_experimentation:tech_mysticism'
 #==============================#
-#==========> Tier 7 <==========#
+#==========> Tier 4 <==========#
 #==============================#
-   - id: 'tech_currency'
-     name: 'Currency'
-     beaker_cost: 80000.0
-     cost: 750000.0
-     points: 8000
-     require_techs: 'tech_monarchy'
+   - id: 'tech_grandma_knitting'
+     name: 'Grandma Knitting'
+     beaker_cost: 7500.0
+     cost: 75000.0
+     points: 750
+     require_techs: 'tech_molding:tech_artillery'
 #
-   - id: 'tech_crafting'
-     name: 'Crafting'
-     beaker_cost: 80000.0
-     cost: 750000.0
-     points: 8000
-     require_techs: 'tech_steel:tech_smithing'
+   - id: 'tech_smithing'
+     name: 'Smithing'
+     beaker_cost: 7500.0
+     cost: 75000.0
+     points: 750
+     require_techs: 'tech_molding:tech_artillery'
 #
-   - id: 'tech_elemental_science'
-     name: 'Elemental Science'
-     beaker_cost: 80000.0
-     cost: 750000.0
-     points: 8000
-     require_techs: 'tech_innovation:tech_gunpowder:tech_steel'
+   - id: 'tech_mathematics'
+     name: 'Mathematics'
+     beaker_cost: 7500.0
+     cost: 75000.0
+     points: 750
+     require_techs: 'tech_breeding'
+#
+   - id: 'tech_stock_market'
+     name: 'Stock Market'
+     beaker_cost: 7500.0
+     cost: 75000.0
+     points: 750
+     require_techs: 'tech_mathematics'
+#
+   - id: 'tech_engineering'
+     name: 'Engineering'
+     beaker_cost: 7500.0
+     cost: 75000.0
+     points: 750
+     require_techs: 'tech_extraction'
+#
+   - id: 'tech_fishing'
+     name: 'Fishing'
+     beaker_cost: 7500.0
+     cost: 75000.0
+     points: 750
+     require_techs: 'tech_masonry'
+#
+   - id: 'tech_trading'
+     name: 'Trading'
+     beaker_cost: 7500.0
+     cost: 75000.0
+     points: 750
+     require_techs: 'tech_masonry'
+#
+   - id: 'tech_code_of_laws'
+     name: 'Code of Laws'
+     beaker_cost: 7500.0
+     cost: 75000.0
+     points: 750
+     require_techs: 'tech_mysticism'
 #==============================#
-#==========> Tier 8 <==========#
+#==========> Tier 5 <==========#
 #==============================#
-   - id: 'tech_international_banking'
-     name: 'International Banking'
-     beaker_cost: 100000.0
-     cost: 1250000.0
-     points: 10000
-     require_techs: 'tech_currency'
+   - id: 'tech_tactical_warfare'
+     name: 'Tactical Warfare'
+     beaker_cost: 15000.0
+     cost: 150000.0
+     points: 1500
+     require_techs: 'tech_grandma_knitting:tech_smithing'
 #
-   - id: 'tech_genetics'
-     name: 'Genetics'
-     beaker_cost: 100000.0
-     cost: 1250000.0
-     points: 10000
-     require_techs: 'tech_nurturing'
+   - id: 'tech_management'
+     name: 'Management'
+     beaker_cost: 15000.0
+     cost: 150000.0
+     points: 1500
+     require_techs: 'tech_mysticism'
+#
+   - id: 'tech_growth_advancement'
+     name: 'Growth Advancement'
+     beaker_cost: 15000.0
+     cost: 150000.0
+     points: 1500
+     require_techs: 'tech_fishing:tech_trading'
+#
+   - id: 'tech_writing'
+     name: 'Writing'
+     beaker_cost: 15000.0
+     cost: 150000.0
+     points: 1500
+     require_techs: 'tech_code_of_laws'
 #
    - id: 'tech_alchemy'
      name: 'Alchemy'
-     beaker_cost: 100000.0
-     cost: 1250000.0
-     points: 10000
-     require_techs: 'tech_malting'
-#
-   - id: 'tech_mega_mechanics'
-     name: 'Mega Mechanics'
-     beaker_cost: 100000.0
-     cost: 1250000.0
-     points: 10000
-     require_techs: 'tech_steel:tech_improved_mechanics'
+     beaker_cost: 15000.0
+     cost: 150000.0
+     points: 1500
+     require_techs: 'tech_malting:tech_code_of_laws'
+#==============================#
+#==========> Tier 6 <==========#
+#==============================#
+
+#==============================#
+#==========> Tier 7 <==========#
+#==============================#
+
+#==============================#
+#==========> Tier 8 <==========#
+#==============================#
+
 #==============================#
 #==========> Tier 9 <==========#
 #==============================#
-   - id: 'tech_economics'
-     name: 'Economics'
-     beaker_cost: 375000.0
-     cost: 2500000.0
-     points: 37500
-     require_techs: 'tech_international_banking'
-#
-   - id: 'tech_titanium'
-     name: 'Titanium'
-     beaker_cost: 375000.0
-     cost: 2500000.0
-     points: 37500
-     require_techs: 'tech_steel:tech_crafting'
+
 #==============================#
 #=========> Tier  10 <=========#
 #==============================#
-   - id: 'tech_systematic_loading'
-     name: 'Systematic Loading'
-     beaker_cost: 500000.0
-     cost: 5000000.0
-     points: 50000
-     require_techs: 'tech_economics'
+
+#==============================#
+#=========> Wonders <==========#
+#==============================#
+   - id: 'tech_the_great_library'
+     name: 'The Great Library'
+     beaker_cost: 115000.0
+     cost: 115000.0
+     points: 11500
+     require_techs: 'tech_fortification:tech_trading:tech_writing'
 #
-   - id: 'tech_atom_developing'
-     name: 'Atom Developing'
-     beaker_cost: 500000.0
-     cost: 5000000.0
-     points: 50000
-     require_techs: 'tech_alchemy'
+   - id: 'tech_the_great_pyramid'
+     name: 'The Great Pyramid'
+     beaker_cost: 150000.0
+     cost: 150000.0
+     points: 15000
+     require_techs: 'tech_animal_husbandry:tech_masonry:tech_malting'
 #
-   - id: 'tech_magic'
-     name: 'Magic'
-     beaker_cost: 500000.0
-     cost: 5000000.0
-     points: 50000
-     require_techs: 'tech_titanium:tech_crafting'
+   - id: 'tech_the_hanging_gardens'
+     name: 'The Hanging Garens'
+     beaker_cost: 200000.0
+     cost: 200000.0
+     points: 20000
+     require_techs: 'tech_breeding:tech_inspection:tech_code_of_laws'
 #
-   - id: 'tech_advanced_mechanics'
-     name: 'Advanced Mechanics'
-     beaker_cost: 500000.0
-     cost: 5000000.0
-     points: 50000
-     require_techs: 'tech_titanium:tech_mega_mechanics'
+   - id: 'tech_the_colossus'
+     name: 'The Colossus'
+     beaker_cost: 135000.0
+     cost: 135000.0
+     points: 13500
+     require_techs: 'tech_code_of_laws:tech_innovation:tech_stock_market'
+#
+   - id: 'tech_notre_dame_de_paris'
+     name: 'Notre Dame De Paris'
+     beaker_cost: 300000.0
+     cost: 300000.0
+     points: 30000
+     require_techs: 'tech_currency:tech_innovation:tech_experimentation'
+#
+   - id: 'tech_chichen_itza'
+     name: 'Chichen Itza'
+     beaker_cost: 165000.0
+     cost: 165000.0
+     points: 16500
+     require_techs: 'tech_genetics:tech_trading:tech_engineering'
+#
+   - id: 'tech_colosseum'
+     name: 'Colosseum'
+     beaker_cost: 35000.0
+     cost: 35000.0
+     points: 3500
+     require_techs: 'tech_exchange:tech_extraction:tech_masonry'
+#

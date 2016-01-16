@@ -149,6 +149,8 @@ public class AdminCommand extends CommandBase {
 					identifier = ItemManager.getId(Material.RAW_FISH);
 				} else if (cat.name.contains("Dyes")) {
 					identifier = ItemManager.getId(Material.BOWL);
+				} else if (cat.name.contains("Tools")) {
+					identifier = ItemManager.getId(Material.SHEARS);
 				} else if (cat.name.contains("Special")) {
 					identifier = ItemManager.getId(Material.BEACON);
 				} else if (cat.name.contains("Tier 1 Material")) {

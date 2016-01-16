@@ -155,10 +155,10 @@ public class Mine extends Structure {
 		double rate = 1;
 		rate += this.getTown().getBuffManager().getEffectiveDouble(Buff.ADVANCED_MINING);
 		
-		if (this.getCiv().hasTechnology("tech_atom_developing")) {
+		if (this.getCiv().hasTechnology("tech_geology_advancement")) {
 			double bonus;
 			try {
-				bonus = CivSettings.getDouble(CivSettings.techsConfig, "atom_developing_mine_buff");
+				bonus = CivSettings.getDouble(CivSettings.techsConfig, "tech_mine_buff");
 				rate *= bonus;
 			} catch (InvalidConfiguration e) {
 				e.printStackTrace();
