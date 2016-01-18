@@ -20,7 +20,6 @@ import com.civcraft.structure.Grocer;
 import com.civcraft.structure.Library;
 import com.civcraft.structure.Pasture;
 import com.civcraft.structure.Quarry;
-import com.civcraft.structure.Shipyard;
 import com.civcraft.structure.Store;
 import com.civcraft.structure.Structure;
 import com.civcraft.structure.Trommel;
@@ -217,27 +216,6 @@ public class ConfigTownUpgrade {
 			}
 			if (didUpgradeFishery) {
 				CivMessage.sendTown(town, "Our Fisheries are now level "+fisheryLevel);
-			}
-			break;
-		case "set_trade_shipyard_upgrade_level":
-			boolean didUpgradeTradeShip = false;
-			int tradeshipLevel = 1;
-			for (Structure structure : town.getStructures()) {
-				if (structure.getConfigId().equalsIgnoreCase("ti_trade_ship")) {
-					//if (structure != null && (structure instanceof FishHatchery)) {
-						Shipyard shipyard = (Shipyard)structure;
-						if (shipyard.getUpgradeLvl() < Integer.valueOf(args[1].trim())) {
-							didUpgradeTradeShip = true;
-							shipyard.setUpgradeLvl(Integer.valueOf(args[1].trim()));
-							shipyard.reprocessCommandSigns();
-							town.saved_trade_shipyard_upgrade_level = shipyard.getLevel();
-							tradeshipLevel = shipyard.getLevel();
-						}
-					}
-				}
-			//}
-			if (didUpgradeTradeShip) {
-				CivMessage.sendTown(town, "Our Shipyard Trading is now level "+tradeshipLevel);
 			}
 			break;
 		case "set_pasture_level":

@@ -68,7 +68,7 @@ public class ConsumeLevelComponent extends Component {
 			for (ConfigLabLevel lvl : CivSettings.labLevels.values()) {
 				this.addLevel(lvl.level, lvl.count);
 				HashMap<Integer, Integer> lapisAmounts = new HashMap<Integer, Integer>();
-				lapisAmounts.put(CivData.FISH, lvl.amount);
+				lapisAmounts.put(CivData.SUGAR, lvl.amount);
 				this.setConsumes(lvl.level, lapisAmounts);
 			}
 		}

@@ -56,11 +56,16 @@ public class Barracks extends Structure {
 			throws CivException {
 		super(center, id, town);
 	}
-
+	
 	public Barracks(ResultSet rs) throws SQLException, CivException {
 		super(rs);
 	}
-
+	
+	@Override
+	public boolean showOnDynmap() {
+		return false;
+	}
+	
 	private String getUnitSignText(int index) throws IndexOutOfBoundsException {
 		ArrayList<ConfigUnit> unitList = getTown().getAvailableUnits();
 		if (unitList.size() == 0) {

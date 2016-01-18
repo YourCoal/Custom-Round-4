@@ -47,7 +47,7 @@ materials:
    shaped: false
    category: '<lightgreen>Tier 1 Material'
    ingredients:
-     - type_id: 4
+     - type_id: 1
        data: 0
        count: 8
 #Updated 12/11/15
@@ -105,20 +105,6 @@ materials:
    category: '<lightgreen>Tier 1 Material'
    ingredients:
      - type_id: 334
-       data: 0
-       count: 9
-#Updated 12/11/15
- - id: 'civ:seasoned_golden_carrot'
-   item_id: 396
-   item_data: 0
-   name: 'Seasoned Golden Carrot'
-   craftable: true
-   shaped: false
-   category: '<lightgreen>Tier 1 Material'
-   components:
-     - name: 'NoRightClick'
-   ingredients:
-     - type_id: 396
        data: 0
        count: 9
 #Updated 12/11/15
@@ -264,11 +250,11 @@ materials:
      - type_id: 0
        custom_id: 'civ:bronze_ingot'
        data: 0
-       count: 2
+       count: 3
      - type_id: 0
        custom_id: 'civ:refined_sugar'
        data: 0
-       count: 7
+       count: 6
 #Updated 12/11/15
  - id: 'civ:bronze_ingot'
    item_id: 126
@@ -392,11 +378,11 @@ materials:
      - type_id: 0
        custom_id: 'civ:steel_ingot'
        data: 0
-       count: 2
+       count: 3
      - type_id: 0
        custom_id: 'civ:refined_sugar'
        data: 0
-       count: 7
+       count: 6
 #Updated 12/11/15
  - id: 'civ:steel_ingot'
    item_id: 339
@@ -491,11 +477,11 @@ materials:
      - type_id: 0
        custom_id: 'civ:titanium_ingot'
        data: 0
-       count: 2
+       count: 3
      - type_id: 0
        custom_id: 'civ:refined_sugar'
        data: 0
-       count: 7
+       count: 6
 #Updated 12/11/15
  - id: 'civ:titanium_ingot'
    item_id: 409
@@ -669,7 +655,7 @@ materials:
    item_data: 0
    name: 'Iron-Reinforced Bow'
    craftable: true
-   required_techs: 'tech_welding'
+   required_techs: 'tech_knitting'
    shaped: true
    category: '<green>Gear Tier 1'
    components:
@@ -835,7 +821,7 @@ materials:
    item_data: 0
    name: 'Bronze-Reinforced Bow'
    craftable: true
-   required_techs: 'tech_smithing'
+   required_techs: 'tech_grandma_knitting'
    shaped: true
    category: '<gold>Gear Tier 2'
    components:
@@ -1004,7 +990,7 @@ materials:
    item_data: 0
    name: 'Steel-Reinforced Bow'
    craftable: true
-   required_techs: 'tech_crafting'
+   required_techs: 'tech_homemade_sewing'
    shaped: true
    category: '<red>Gear Tier 3'
    components:
@@ -1036,7 +1022,7 @@ materials:
    item_data: 0
    name: 'Steel Longsword'
    craftable: true
-   required_techs: 'tech_crafting'
+   required_techs: 'tech_newb_mechanics'
    shaped: true
    category: '<red>Gear Tier 3'
    components:
@@ -1066,7 +1052,7 @@ materials:
    item_data: 0
    name: 'Steel Helmet'
    craftable: true
-   required_techs: 'tech_crafting'
+   required_techs: 'tech_newb_mechanics'
    shaped: true
    category: '<red>Gear Tier 3'
    components:
@@ -1092,7 +1078,7 @@ materials:
    item_data: 0
    name: 'Steel Chestplate'
    craftable: true
-   required_techs: 'tech_crafting'
+   required_techs: 'tech_newb_mechanics'
    shaped: true
    category: '<red>Gear Tier 3'
    components:
@@ -1118,7 +1104,7 @@ materials:
    item_data: 0
    name: 'Steel Leggings'
    craftable: true
-   required_techs: 'tech_crafting'
+   required_techs: 'tech_newb_mechanics'
    shaped: true
    category: '<red>Gear Tier 3'
    components:
@@ -1144,7 +1130,7 @@ materials:
    item_data: 0
    name: 'Steel Boots'
    craftable: true
-   required_techs: 'tech_crafting'
+   required_techs: 'tech_newb_mechanics'
    shaped: true
    category: '<red>Gear Tier 3'
    components:
@@ -1843,7 +1829,7 @@ materials:
 #====================================#
 #Updated 12/11/15
  - id: 'civ:found_civ'
-   item_id: 386
+   item_id: 403
    item_data: 0
    name: 'Founding Civilization Constitution'
    craftable: true
@@ -1864,14 +1850,10 @@ materials:
        data: 0
        custom_id: 'civ:mega_compacted_stone'
        letter: 's'
-     - type_id: 0
-       data: 0
-       custom_id: 'civ:super_faith'
-       letter: 't'
    shape:
      - "ccc"
-     - "btb"
-     - "sts"
+     - "bbb"
+     - "sss"
 #Updated 12/11/15
  - id: 'civ:camp_faith'
    item_id: 399
@@ -1880,22 +1862,20 @@ materials:
    craftable: false
    shaped: false
    category: 'Special'
+#
 #Updated 12/11/15
- - id: 'civ:super_faith'
-   item_id: 148
-   item_data: 0
-   name: 'Super Faith'
-   craftable: true
-   shaped: false
-   category: 'Special'
-   ingredients:
-     - type_id: 0
-       data: 0
-       custom_id: 'civ:camp_faith'
-       count: 4
-#
-#
-#
+# - id: 'civ:super_faith'
+#   item_id: 148
+#   item_data: 0
+#   name: 'Super Faith'
+#   craftable: true
+#   shaped: false
+#   category: 'Special'
+#   ingredients:
+#     - type_id: 0
+#       data: 0
+#       custom_id: 'civ:camp_faith'
+#       count: 4
 #
 #
 # XXX mat ID hard coded for camp refund. with /camp undo 

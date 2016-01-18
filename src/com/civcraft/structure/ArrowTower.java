@@ -44,6 +44,11 @@ public class ArrowTower extends Structure {
 	}
 	
 	@Override
+	public boolean showOnDynmap() {
+		return false;
+	}
+	
+	@Override
 	public void loadSettings() {
 		super.loadSettings();
 		arrowComponent = new ProjectileArrowComponent(this, this.getCenterLocation().getLocation());

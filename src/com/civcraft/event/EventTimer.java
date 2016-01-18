@@ -107,18 +107,10 @@ public class EventTimer {
 			e.printStackTrace();
 		}
 		
-		/* Setup Hourly tick event 5 (Runs trade ships). */
+		/* Setup Hourly tick event 5 (Runs culture). */
 		try {
 			HourlyTickEventMinute5 hourlyTickEvent5 = new HourlyTickEventMinute5();
 			new EventTimer("hourly5", hourlyTickEvent5, hourlyTickEvent5.getNextDate());
-		} catch (InvalidConfiguration e) {
-			e.printStackTrace();
-		}
-		
-		/* Setup Hourly tick event 6 (Runs culture). */
-		try {
-			HourlyTickEventMinute6 hourlyTickEvent6 = new HourlyTickEventMinute6();
-			new EventTimer("hourly6", hourlyTickEvent6, hourlyTickEvent6.getNextDate());
 		} catch (InvalidConfiguration e) {
 			e.printStackTrace();
 		}

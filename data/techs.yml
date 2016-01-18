@@ -274,8 +274,8 @@ techs:
      points: 1500
      require_techs: 'tech_grandma_knitting:tech_smithing'
 #
-   - id: 'tech_management'
-     name: 'Management'
+   - id: 'tech_construction'
+     name: 'Construction'
      beaker_cost: 15000.0
      cost: 150000.0
      points: 1500
@@ -304,11 +304,64 @@ techs:
 #==============================#
 #==========> Tier 6 <==========#
 #==============================#
-
+   - id: 'tech_homemade_sewing'
+     name: 'Homemade Sewing'
+     beaker_cost: 30000.0
+     cost: 300000.0
+     points: 3000
+     require_techs: 'tech_tactical_warfare'
+#
+   - id: 'tech_newb_mechanics'
+     name: 'Newb Mechanics'
+     beaker_cost: 30000.0
+     cost: 300000.0
+     points: 3000
+     require_techs: 'tech_tactical_warfare'
+#
+   - id: 'tech_management'
+     name: 'Management'
+     beaker_cost: 30000.0
+     cost: 300000.0
+     points: 3000
+     require_techs: 'tech_construction'
+#
+   - id: 'tech_monarchy'
+     name: 'Monarchy'
+     beaker_cost: 30000.0
+     cost: 300000.0
+     points: 3000
+     require_techs: 'tech_writing'
 #==============================#
 #==========> Tier 7 <==========#
 #==============================#
-
+   - id: 'tech_weapon_development'
+     name: 'Weapon Development'
+     beaker_cost: 62500.0
+     cost: 625000.0
+     points: 6240
+     require_techs: 'tech_homemade_sewing:tech_newb_mechanics'
+#
+   - id: 'tech_innovation'
+     name: 'Weapon Innovation'
+     beaker_cost: 62500.0
+     cost: 625000.0
+     points: 6240
+     require_techs: 'tech_management'
+#
+   - id: 'tech_currency'
+     name: 'Currency'
+     beaker_cost: 62500.0
+     cost: 625000.0
+     points: 6240
+     require_techs: 'tech_management'
+#
+   - id: 'tech_chemistry'
+     name: 'Chemistry'
+     beaker_cost: 62500.0
+     cost: 625000.0
+     points: 6240
+     require_techs: 'tech_alchemy:tech_monarchy'
+#
 #==============================#
 #==========> Tier 8 <==========#
 #==============================#

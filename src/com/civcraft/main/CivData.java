@@ -58,6 +58,7 @@ public class CivData {
 	public static final byte SALMON = 1;
 	public static final byte CLOWNFISH = 2;
 	public static final byte PUFFERFISH = 3;
+	public static final int SUGAR = 353;
 	public static final int PUMPKIN_PIE = 400;
 	
 	public static final int IRON_INGOT = 265;

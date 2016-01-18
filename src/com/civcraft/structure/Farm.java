@@ -68,13 +68,13 @@ public class Farm extends Structure {
 	}
 	
 	@Override
-	public String getDynmapDescription() {
-		return null;
+	public boolean canRestoreFromTemplate() {
+		return false;
 	}
 	
 	@Override
-	public boolean canRestoreFromTemplate() {
-		return false;
+	public String getDynmapDescription() {
+		return null;
 	}
 	
 	@Override

@@ -1,21 +1,3 @@
-/*************************************************************************
- * 
- * AVRGAMING LLC
- * __________________
- * 
- *  [2013] AVRGAMING LLC
- *  All Rights Reserved.
- * 
- * NOTICE:  All information contained herein is, and remains
- * the property of AVRGAMING LLC and its suppliers,
- * if any.  The intellectual and technical concepts contained
- * herein are proprietary to AVRGAMING LLC
- * and its suppliers and may be covered by U.S. and Foreign Patents,
- * patents in process, and are protected by trade secret or copyright law.
- * Dissemination of this information or reproduction of this material
- * is strictly forbidden unless prior written permission is obtained
- * from AVRGAMING LLC.
- */
 package com.civcraft.structure;
 
 import java.sql.ResultSet;
@@ -59,7 +41,6 @@ public class ScoutTower extends Structure {
 	@Override
 	public void loadSettings() {
 		super.loadSettings();
-
 		try {
 			range = CivSettings.getDouble(CivSettings.warConfig, "scout_tower.range");
 			proximityComponent = new PlayerProximityComponent();
@@ -70,8 +51,6 @@ public class ScoutTower extends Structure {
 			proximityComponent.setRadius(range);
 			
 			reportSeconds = (int)CivSettings.getDouble(CivSettings.warConfig, "scout_tower.update");
-			
-			
 		} catch (InvalidConfiguration e) {
 			e.printStackTrace();
 		}
@@ -191,9 +170,14 @@ public class ScoutTower extends Structure {
 	}
 	
 	@Override
-	public String getMarkerIconName() {
-		return "tower";
+	public boolean showOnDynmap() {
+		return false;
 	}
+	
+//	@Override
+//	public String getMarkerIconName() {
+//		return "tower";
+//	}
 
 	public int getReportSeconds() {
 		return reportSeconds;

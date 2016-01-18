@@ -176,13 +176,13 @@ public abstract class LoreMaterial {
 		if (material instanceof LoreCraftableMaterial) {
 			LoreCraftableMaterial craftMat = (LoreCraftableMaterial)material;
 			attrs.addLore(CivColor.ITALIC+craftMat.getConfigMaterial().category);
-			if (craftMat.getConfigMaterial().tradeableShipyard) {
-				attrs.setCivCraftProperty("tradeableShipyard", "true");
-			}
-			
-			if (craftMat.getConfigMaterial().tradeShipyardValue >= 0) {
-				attrs.setCivCraftProperty("tradeShipyardValue", ""+craftMat.getConfigMaterial().tradeShipyardValue);
-			}
+//			if (craftMat.getConfigMaterial().tradeableShipyard) {
+//				attrs.setCivCraftProperty("tradeableShipyard", "true");
+//			}
+//			
+//			if (craftMat.getConfigMaterial().tradeShipyardValue >= 0) {
+//				attrs.setCivCraftProperty("tradeShipyardValue", ""+craftMat.getConfigMaterial().tradeShipyardValue);
+//			}
 			
 			if (craftMat.getConfigMaterial().shiny) {
 				attrs.setShiny();

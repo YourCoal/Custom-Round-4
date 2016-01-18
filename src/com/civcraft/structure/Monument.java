@@ -20,12 +20,7 @@ public class Monument extends Structure {
 	}
 	
 	@Override
-	public String getDynmapDescription() {
-		return null;
-	}
-	
-	@Override
-	public String getMarkerIconName() {
-		return null;
+	public boolean showOnDynmap() {
+		return false;
 	}
 }

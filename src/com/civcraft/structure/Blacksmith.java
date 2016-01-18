@@ -77,14 +77,14 @@ public class Blacksmith extends Structure {
 	}
 	
 	@Override
-	public String getDynmapDescription() {
-		return null;
+	public boolean showOnDynmap() {
+		return false;
 	}
 	
-	@Override
-	public String getMarkerIconName() {
-		return "factory";
-	}
+//	@Override
+//	public String getMarkerIconName() {
+//		return "factory";
+//	}
 	
 	@Override
 	public void processSignAction(Player player, StructureSign sign, PlayerInteractEvent event) throws CivException {

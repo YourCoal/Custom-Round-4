@@ -35,8 +35,6 @@ public class ConfigMaterial {
 	public boolean vanilla = false;
 	public int amount = 1;
 	public boolean shiny = false;
-	public boolean tradeableShipyard = false;
-	public double tradeShipyardValue = 0;
 	
 	@SuppressWarnings("unchecked")
 	public static void loadConfig(FileConfiguration cfg, Map<String, ConfigMaterial> materials){
@@ -98,16 +96,6 @@ public class ConfigMaterial {
 			Boolean isShiny = (Boolean)b.get("shiny");
 			if (isShiny != null) {
 				mat.shiny = isShiny;
-			}
-			
-			Boolean isTradeableShipyard = (Boolean)b.get("tradeableShipyard");
-			if (isTradeableShipyard != null) {
-				mat.tradeableShipyard = isTradeableShipyard;
-			}
-			
-			Double tradeShipyardValue = (Double)b.get("tradeShipyardValue");
-			if (tradeShipyardValue != null) {
-				mat.tradeShipyardValue = tradeShipyardValue;
 			}
 			
 			Boolean vanilla = (Boolean)b.get("vanilla");
