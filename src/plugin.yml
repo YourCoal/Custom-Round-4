@@ -1,6 +1,7 @@
-name: CivCraft
+name: CivCraftR4
 main: com.civcraft.main.CivCraft
-version: 1.2.0
+softdepends: [TitleAPI]
+version: 1.2
 
 commands:
     town:

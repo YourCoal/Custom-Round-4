@@ -199,7 +199,7 @@
    shaped: false
    category: '<b>Element'
    #Updated 11/21/15
-    - id: 'civ:element_iron'
+ - id: 'civ:element_iron'
    item_id: 147
    item_data: 0
    name: '[26] Iron'
@@ -735,7 +735,7 @@
    shaped: false
    category: '<b>Element'
    #Updated 11/21/15
-   - id: 'civ:element_uranium'
+- id: 'civ:element_uranium'
    item_id: 147
    item_data: 0
    name: '[92] Uranium'
@@ -830,7 +830,7 @@
    craftable: false
    shaped: false
    category: '<b>Element'
-    - id: 'civ:element_rutherfordium'
+ - id: 'civ:element_rutherfordium'
    item_id: 147
    item_data: 0
    name: '[104] Rutherfordium'
@@ -838,7 +838,7 @@
    shaped: false
    category: '<b>Element'
    #Updated 11/21/15
-    - id: 'civ:element_Dubnium'
+ - id: 'civ:element_Dubnium'
    item_id: 147
    item_data: 0
    name: '[105] Dubnium'
@@ -846,7 +846,7 @@
    shaped: false
    category: '<b>Element'
    #Updated 11/21/15
-    - id: 'civ:element_Seaborgium'
+ - id: 'civ:element_Seaborgium'
    item_id: 147
    item_data: 0
    name: '[106] Seaborgium'
@@ -854,7 +854,7 @@
    shaped: false
    category: '<b>Element'
    #Updated 11/21/15
-    - id: 'civ:element_bohrium'
+ - id: 'civ:element_bohrium'
    item_id: 147
    item_data: 0
    name: '[107] Bohrium'
@@ -862,7 +862,7 @@
    shaped: false
    category: '<b>Element'
    #Updated 11/21/15
-    - id: 'civ:element_hassium'
+ - id: 'civ:element_hassium'
    item_id: 147
    item_data: 0
    name: '[108] Hassium'
@@ -870,7 +870,7 @@
    shaped: false
    category: '<b>Element'
    #Updated 11/21/15
-    - id: 'civ:element_meitnerium'
+ - id: 'civ:element_meitnerium'
    item_id: 147
    item_data: 0
    name: '[109] Meitnerium'
@@ -878,7 +878,7 @@
    shaped: false
    category: '<b>Element'
    #Updated 11/21/15
-    - id: 'civ:element_darmstadtium'
+ - id: 'civ:element_darmstadtium'
    item_id: 147
    item_data: 0
    name: '[110] Darmstadtium'
@@ -886,7 +886,7 @@
    shaped: false
    category: '<b>Element'
    #Updated 11/21/15
-    - id: 'civ:element_roentgenium'
+ - id: 'civ:element_roentgenium'
    item_id: 147
    item_data: 0
    name: '[111] Roentgenium'
@@ -894,7 +894,7 @@
    shaped: false
    category: '<b>Element'
    #Updated 11/21/15
-    - id: 'civ:element_copernicium'
+ - id: 'civ:element_copernicium'
    item_id: 147
    item_data: 0
    name: '[112] Copernicium'
@@ -902,7 +902,7 @@
    shaped: false
    category: '<b>Element'
    #Updated 11/21/15
-    - id: 'civ:element_ununtrium
+ - id: 'civ:element_ununtrium
    item_id: 147
    item_data: 0
    name: '[113] Ununtrium
@@ -910,7 +910,7 @@
    shaped: false
    category: '<b>Element'
    #Updated 11/21/15
-    - id: 'civ:element_ununquandium'
+ - id: 'civ:element_ununquandium'
    item_id: 147
    item_data: 0
    name: '[114] Ununquandium'
@@ -918,7 +918,7 @@
    shaped: false
    category: '<b>Element'
    #Updated 11/21/15
-    - id: 'civ:element_Ununpentium'
+ - id: 'civ:element_Ununpentium'
    item_id: 147
    item_data: 0
    name: '[115] Ununpentium'
@@ -926,7 +926,7 @@
    shaped: false
    category: '<b>Element'
    #Updated 11/21/15
-   - id: 'civ:element_ununhexium'
+- id: 'civ:element_ununhexium'
    item_id: 147
    item_data: 0
    name: '[116] Ununhexium'
@@ -934,7 +934,7 @@
    shaped: false
    category: '<b>Element'
    #Updated 11/21/15
-   - id: 'civ:element_ununseptium'
+- id: 'civ:element_ununseptium'
    item_id: 147
    item_data: 0
    name: '[117] Ununseptium'
@@ -942,7 +942,7 @@
    shaped: false
    category: '<b>Element'
    #Updated 11/21/15
-   - id: 'civ:element_ununnoctium'
+- id: 'civ:element_ununnoctium'
    item_id: 147
    item_data: 0
    name: '[118] Ununnoctium'

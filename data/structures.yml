@@ -624,7 +624,7 @@ structures:
         - name: 'AttributeStatic'
           type: 'direct'
           attribute: 'CULTURE'
-          value: '4.0'
+          value: '5.0'
 #
   - id: s_capitol
     template: capital

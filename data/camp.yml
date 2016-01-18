@@ -11,7 +11,7 @@ camp:
  template: 'camp'
  #Sifter Settings
  sifter_gold_nugget_chance: 0.15
- sifter_iron_ingot_chance: 0.05
+ sifter_iron_ingot_chance: 0.075
  #Number of hours to let camp be raidable
  raid_length: 1
 

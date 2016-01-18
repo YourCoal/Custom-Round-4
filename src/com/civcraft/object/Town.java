@@ -2383,7 +2383,7 @@ public class Town extends SQLObject {
 		//return outpost_upkeep*outposts.size();
 		return 0;
 	}
-
+	
 	public boolean isOutlaw(String name) {
 		Resident res = CivGlobal.getResident(name);
 		return this.outlaws.contains(res.getUUIDString());

@@ -13,11 +13,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.civcraft.camp.Camp;
+import com.civcraft.config.CivSettings;
 import com.civcraft.exception.CivException;
 import com.civcraft.object.Civilization;
 import com.civcraft.object.Resident;
 import com.civcraft.object.Town;
 import com.civcraft.util.CivColor;
+import com.connorlinfoot.titleapi.TitleAPI;
 
 public class BasicMessages {
 	
@@ -73,6 +75,24 @@ public class BasicMessages {
 			if (isPlayer) { ((Player) sender).sendMessage(line);
 			} else { ((CommandSender) sender).sendMessage(line);
 			}
+		}
+	}
+	
+	public static void sendTitle(Object sender, String title, String subTitle) {
+		if (CivSettings.hasTitleAPI) {
+			Player player = null;
+			if ((sender instanceof Player)) {
+				player = (Player) sender;
+			} else if (sender instanceof Resident) {
+				try {
+					player = CivGlobal.getPlayer(((Resident) sender));
+				} catch (CivException e) { // No player online
+				}
+			} if (player != null) {
+				TitleAPI.sendTitle(player, 10, 20, 5, title, subTitle);
+			}
+		} else {
+			send(sender, title+" "+subTitle);
 		}
 	}
 	
